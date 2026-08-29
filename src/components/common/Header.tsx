@@ -99,24 +99,24 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header
       id="main-app-header"
-      className="bg-white border-b border-[#dae1ff] sticky top-0 z-40 shadow-xs"
+      className="bg-[#0B1726]/95 backdrop-blur-md border-b border-[#243A50] sticky top-0 z-40 shadow-md text-[#F4F8FC]"
     >
       {/* Top Banner with Role Switcher & System Controls */}
-      <div className="bg-[#eaedff] px-4 py-2 text-xs border-b border-[#dae1ff] flex flex-wrap items-center justify-between gap-2">
+      <div className="bg-[#07111F] px-4 py-2 text-xs border-b border-[#243A50] flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <span className="font-semibold text-[#001849] uppercase tracking-wide flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-[#006767]"></span>
-            MindCare NER Production Platform
+          <span className="font-bold text-[#F4F8FC] uppercase tracking-wide flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#19C3B1] animate-pulse"></span>
+            MindCare NER Platform
           </span>
-          <span className="text-[#3e4948] hidden sm:inline">|</span>
-          <span className="text-[#3e4948] font-medium hidden md:inline">
-            Elderly Dementia Cognitive Assistance Platform (North East Region)
+          <span className="text-[#7F91A6] hidden sm:inline">|</span>
+          <span className="text-[#B7C5D6] font-medium hidden md:inline">
+            Elderly Cognitive Assistance Platform (North East Region)
           </span>
         </div>
 
         {/* Role Selector Pill Tabs */}
-        <div className="flex items-center gap-1 bg-white p-1 rounded-lg border border-[#dae1ff]">
-          <span className="text-[11px] font-semibold text-[#455f88] px-2 hidden lg:inline">
+        <div className="flex items-center gap-1 bg-[#101F31] p-1 rounded-xl border border-[#243A50]">
+          <span className="text-[11px] font-semibold text-[#7F91A6] px-2 hidden lg:inline">
             Active View:
           </span>
           <button
@@ -125,10 +125,10 @@ export const Header: React.FC<HeaderProps> = ({
               sound.playClick();
               onRoleChange('AWARENESS');
             }}
-            className={`px-2.5 py-1 rounded-md font-bold text-xs transition-colors flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
               currentRole === 'AWARENESS'
-                ? 'bg-gradient-to-r from-[#004d4d] to-[#006767] text-white shadow-xs ring-2 ring-teal-500/30'
-                : 'text-[#004d4d] bg-teal-50/70 hover:bg-teal-100'
+                ? 'bg-gradient-to-r from-[#19C3B1] to-[#38D9C5] text-[#07111F] font-black shadow-xs'
+                : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -141,10 +141,10 @@ export const Header: React.FC<HeaderProps> = ({
               sound.playClick();
               onRoleChange('PATIENT');
             }}
-            className={`px-2.5 py-1 rounded-md font-medium text-xs transition-colors flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
               currentRole === 'PATIENT'
-                ? 'bg-[#006767] text-white shadow-xs'
-                : 'text-[#001849] hover:bg-[#f2f3ff]'
+                ? 'bg-[#19C3B1] text-[#07111F] font-black shadow-xs'
+                : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
             }`}
           >
             <UserCheck className="w-3.5 h-3.5" />
@@ -157,10 +157,10 @@ export const Header: React.FC<HeaderProps> = ({
               sound.playClick();
               onRoleChange('CAREGIVER');
             }}
-            className={`px-2.5 py-1 rounded-md font-medium text-xs transition-colors flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
               currentRole === 'CAREGIVER'
-                ? 'bg-[#455f88] text-white shadow-xs'
-                : 'text-[#001849] hover:bg-[#f2f3ff]'
+                ? 'bg-[#5BA7FF] text-[#07111F] font-black shadow-xs'
+                : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
             }`}
           >
             <HeartHandshake className="w-3.5 h-3.5" />
@@ -173,10 +173,10 @@ export const Header: React.FC<HeaderProps> = ({
               sound.playClick();
               onRoleChange('HEALTHCARE_WORKER');
             }}
-            className={`px-2.5 py-1 rounded-md font-medium text-xs transition-colors flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
               currentRole === 'HEALTHCARE_WORKER'
-                ? 'bg-[#059669] text-white shadow-xs'
-                : 'text-[#001849] hover:bg-[#f2f3ff]'
+                ? 'bg-[#8B7CFF] text-[#07111F] font-black shadow-xs'
+                : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
             }`}
           >
             <Stethoscope className="w-3.5 h-3.5" />
@@ -189,14 +189,14 @@ export const Header: React.FC<HeaderProps> = ({
               sound.playClick();
               onRoleChange('ADMIN');
             }}
-            className={`px-2.5 py-1 rounded-md font-medium text-xs transition-colors flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
               currentRole === 'ADMIN'
-                ? 'bg-[#8a4c27] text-white shadow-xs'
-                : 'text-[#001849] hover:bg-[#f2f3ff]'
+                ? 'bg-[#F4B740] text-[#07111F] font-black shadow-xs'
+                : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Admin & Architecture</span>
+            <span>Admin & Arch</span>
           </button>
         </div>
       </div>
@@ -205,29 +205,29 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
         {/* Brand & Logo */}
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#006767] to-[#208181] text-white flex items-center justify-center shadow-sm">
-            <Brain className="w-7 h-7" />
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#19C3B1] to-[#0A8E80] text-[#07111F] flex items-center justify-center shadow-xs">
+            <Brain className="w-6 h-6 stroke-[2.5]" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold text-[#001849] tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-black text-[#F4F8FC] tracking-tight">
                 {t.appName}
               </h1>
-              <span className="bg-[#b6d0ff] text-[#002b74] text-[11px] font-bold px-2 py-0.5 rounded-full">
+              <span className="bg-[#14283D] border border-[#243A50] text-[#38D9C5] text-[10px] font-black px-2 py-0.5 rounded-full">
                 NER Edition
               </span>
             </div>
-            <p className="text-xs font-medium text-[#455f88] hidden sm:block">
+            <p className="text-xs font-semibold text-[#B7C5D6] hidden sm:block">
               {t.tagline}
             </p>
           </div>
         </div>
 
         {/* Action Controls: Language, Font Scale, Sound, Offline Simulator */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-2.5">
           {/* Language Selector */}
           <div className="relative flex items-center">
-            <Globe className="w-4 h-4 text-[#455f88] absolute left-2.5 pointer-events-none" />
+            <Globe className="w-4 h-4 text-[#38D9C5] absolute left-2.5 pointer-events-none" />
             <select
               id="language-selector"
               value={currentLang}
@@ -235,10 +235,10 @@ export const Header: React.FC<HeaderProps> = ({
                 sound.playClick();
                 onLanguageChange(e.target.value as SupportedLanguage);
               }}
-              className="pl-8 pr-7 py-2 bg-[#f2f3ff] hover:bg-[#eaedff] text-[#001849] text-sm font-semibold rounded-xl border border-[#dae1ff] focus:outline-none focus:ring-2 focus:ring-[#006767] cursor-pointer appearance-none"
+              className="pl-8 pr-7 py-2 bg-[#101F31] hover:bg-[#14283D] text-[#F4F8FC] text-xs sm:text-sm font-bold rounded-xl border border-[#243A50] focus:outline-none focus:ring-2 focus:ring-[#19C3B1] cursor-pointer appearance-none"
             >
               {(Object.keys(LANGUAGE_METADATA) as SupportedLanguage[]).map((langKey) => (
-                <option key={langKey} value={langKey}>
+                <option key={langKey} value={langKey} className="bg-[#101F31] text-[#F4F8FC]">
                   {LANGUAGE_METADATA[langKey].nativeName} ({LANGUAGE_METADATA[langKey].label})
                 </option>
               ))}
@@ -246,7 +246,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Accessibility Font Size Scaler */}
-          <div className="hidden sm:flex items-center bg-[#f2f3ff] rounded-xl p-1 border border-[#dae1ff]">
+          <div className="hidden sm:flex items-center bg-[#101F31] rounded-xl p-1 border border-[#243A50]">
             <button
               id="font-size-normal"
               title="Standard Text Size"
@@ -254,10 +254,10 @@ export const Header: React.FC<HeaderProps> = ({
                 sound.playClick();
                 onFontSizeChange('normal');
               }}
-              className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+              className={`w-7 h-7 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                 fontSize === 'normal'
-                  ? 'bg-[#006767] text-white shadow-xs'
-                  : 'text-[#455f88] hover:bg-[#eaedff]'
+                  ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
+                  : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
               }`}
             >
               A
@@ -269,10 +269,10 @@ export const Header: React.FC<HeaderProps> = ({
                 sound.playClick();
                 onFontSizeChange('large');
               }}
-              className={`w-7 h-7 rounded-lg text-sm font-bold transition-all ${
+              className={`w-7 h-7 rounded-lg text-sm font-bold transition-all cursor-pointer ${
                 fontSize === 'large'
-                  ? 'bg-[#006767] text-white shadow-xs'
-                  : 'text-[#455f88] hover:bg-[#eaedff]'
+                  ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
+                  : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
               }`}
             >
               A+
@@ -284,10 +284,10 @@ export const Header: React.FC<HeaderProps> = ({
                 sound.playClick();
                 onFontSizeChange('extra-large');
               }}
-              className={`w-7 h-7 rounded-lg text-base font-bold transition-all ${
+              className={`w-7 h-7 rounded-lg text-base font-bold transition-all cursor-pointer ${
                 fontSize === 'extra-large'
-                  ? 'bg-[#006767] text-white shadow-xs'
-                  : 'text-[#455f88] hover:bg-[#eaedff]'
+                  ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
+                  : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
               }`}
             >
               A++
@@ -299,16 +299,16 @@ export const Header: React.FC<HeaderProps> = ({
             id="sound-toggle-btn"
             title={isMuted ? 'Unmute voice and gentle chimes' : 'Mute audio'}
             onClick={toggleSound}
-            className={`p-2.5 rounded-xl border transition-all ${
+            className={`p-2 rounded-xl border transition-all cursor-pointer ${
               !isMuted
-                ? 'bg-[#f2f3ff] border-[#dae1ff] text-[#006767] hover:bg-[#eaedff]'
-                : 'bg-[#ffdad6] border-[#ffb4ab] text-[#ba1a1a]'
+                ? 'bg-[#101F31] border-[#243A50] text-[#38D9C5] hover:bg-[#14283D]'
+                : 'bg-red-950/60 border-red-800/80 text-red-300'
             }`}
           >
             {!isMuted ? (
-              <Volume2 className="w-5 h-5" />
+              <Volume2 className="w-4 h-4" />
             ) : (
-              <VolumeX className="w-5 h-5" />
+              <VolumeX className="w-4 h-4" />
             )}
           </button>
 
@@ -325,20 +325,20 @@ export const Header: React.FC<HeaderProps> = ({
                   ? 'Currently simulating Offline Mode. Click to reconnect and sync queue.'
                   : 'Currently Online. Click to simulate Offline field conditions.'
               }
-              className={`px-3 py-2 rounded-xl text-xs font-semibold border flex items-center gap-1.5 transition-all ${
+              className={`px-3 py-2 rounded-xl text-xs font-bold border flex items-center gap-1.5 transition-all cursor-pointer ${
                 !isOffline
-                  ? 'bg-[#f0fdf4] border-[#86efac] text-[#15803d] hover:bg-[#dcfce7]'
-                  : 'bg-[#fff7ed] border-[#fed7aa] text-[#c2410c] hover:bg-[#ffedd5]'
+                  ? 'bg-emerald-950/60 border-emerald-800 text-emerald-300 hover:bg-emerald-900/60'
+                  : 'bg-amber-950/60 border-amber-800 text-amber-300 hover:bg-amber-900/60'
               }`}
             >
               {!isOffline ? (
                 <>
-                  <Wifi className="w-4 h-4 text-[#15803d]" />
+                  <Wifi className="w-3.5 h-3.5 text-emerald-400" />
                   <span className="hidden md:inline">Online Sync</span>
                 </>
               ) : (
                 <>
-                  <WifiOff className="w-4 h-4 text-[#c2410c]" />
+                  <WifiOff className="w-3.5 h-3.5 text-amber-400" />
                   <span>Offline Mode</span>
                 </>
               )}
@@ -354,17 +354,17 @@ export const Header: React.FC<HeaderProps> = ({
                   ? 'Reconnect network to sync'
                   : `${pendingSyncCount} pending records in local queue`
               }
-              className={`p-2 rounded-xl border transition-all relative ${
+              className={`p-2 rounded-xl border transition-all relative cursor-pointer ${
                 isOffline
-                  ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
-                  : 'bg-[#f2f3ff] border-[#dae1ff] text-[#455f88] hover:text-[#006767]'
+                  ? 'bg-gray-900 text-gray-600 border-gray-800 cursor-not-allowed'
+                  : 'bg-[#101F31] border-[#243A50] text-[#B7C5D6] hover:text-[#19C3B1]'
               }`}
             >
               <RefreshCw
-                className={`w-4 h-4 ${isSyncing ? 'animate-spin text-[#006767]' : ''}`}
+                className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin text-[#19C3B1]' : ''}`}
               />
               {pendingSyncCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-[#ea580c] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                <span className="absolute -top-1.5 -right-1.5 bg-[#F4B740] text-[#07111F] text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center">
                   {pendingSyncCount}
                 </span>
               )}
@@ -380,10 +380,10 @@ export const Header: React.FC<HeaderProps> = ({
                 onOpenDemonstrationMode();
               }}
               title="Open Demonstration Mode Sandbox with 4 Patient Archetypes"
-              className="px-3 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-xs font-black rounded-xl flex items-center gap-1.5 shadow-xs transition-all active:scale-95 cursor-pointer"
+              className="px-3 py-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-[#F4F8FC] text-xs font-black rounded-xl flex items-center gap-1.5 shadow-xs transition-all active:scale-95 cursor-pointer border border-amber-500/40"
             >
               <Zap className="w-3.5 h-3.5 fill-white" />
-              <span className="hidden sm:inline">Demo Sandbox</span>
+              <span className="hidden sm:inline">Simulate</span>
             </button>
           )}
 
@@ -396,9 +396,9 @@ export const Header: React.FC<HeaderProps> = ({
                 onOpenAccessibility();
               }}
               title="Accessibility Modes (Large Text, High Contrast, Voice First, Low Literacy)"
-              className="p-2.5 bg-[#f2f4fc] hover:bg-[#eaedff] text-[#001849] border border-[#dae1ff] rounded-xl flex items-center justify-center transition-all cursor-pointer"
+              className="p-2 bg-[#101F31] hover:bg-[#14283D] text-[#38D9C5] border border-[#243A50] rounded-xl flex items-center justify-center transition-all cursor-pointer"
             >
-              <Sliders className="w-4 h-4 text-[#006767]" />
+              <Sliders className="w-4 h-4" />
             </button>
           )}
 
@@ -411,7 +411,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onOpenVoiceAssistant();
               }}
               title="Open Voice Assistant in Native Dialect"
-              className="p-2.5 bg-teal-50 hover:bg-teal-100 text-[#006767] border border-teal-200 rounded-xl flex items-center justify-center transition-all cursor-pointer"
+              className="p-2 bg-teal-950/80 hover:bg-teal-900 text-[#38D9C5] border border-teal-700/60 rounded-xl flex items-center justify-center transition-all cursor-pointer"
             >
               <Volume2 className="w-4 h-4" />
             </button>
@@ -426,9 +426,9 @@ export const Header: React.FC<HeaderProps> = ({
                 onOpenPrivacy();
               }}
               title="Privacy Center & Data Sovereignty"
-              className="p-2.5 bg-[#f2f4fc] hover:bg-[#eaedff] text-[#001849] border border-[#dae1ff] rounded-xl flex items-center justify-center transition-all cursor-pointer"
+              className="p-2 bg-[#101F31] hover:bg-[#14283D] text-[#5BA7FF] border border-[#243A50] rounded-xl flex items-center justify-center transition-all cursor-pointer"
             >
-              <Shield className="w-4 h-4 text-[#006767]" />
+              <Shield className="w-4 h-4" />
             </button>
           )}
 
@@ -439,18 +439,18 @@ export const Header: React.FC<HeaderProps> = ({
               sound.playClick();
               onOpenArchitecture();
             }}
-            className="hidden lg:flex items-center gap-1.5 px-3 py-2 bg-[#208181] hover:bg-[#006767] text-white text-xs font-semibold rounded-xl transition-all shadow-xs cursor-pointer"
+            className="hidden lg:flex items-center gap-1.5 px-3 py-2 bg-[#14283D] hover:bg-[#162B40] text-[#38D9C5] border border-[#243A50] text-xs font-bold rounded-xl transition-all shadow-xs cursor-pointer"
           >
-            <Layers className="w-4 h-4" />
-            <span>Arch & Flow</span>
+            <Layers className="w-3.5 h-3.5" />
+            <span>Architecture</span>
           </button>
         </div>
       </div>
 
       {/* Primary Platform Navigation Strip (Home, Features, AI, Caregivers, Clinicians, Cultural, FAQ, Contact) */}
-      <div className="bg-[#fbfcff] border-t border-[#dae1ff] px-4 sm:px-6 py-2 overflow-x-auto">
+      <div className="bg-[#0B1726] border-t border-[#243A50] px-4 sm:px-6 py-2 overflow-x-auto">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <nav className="flex items-center gap-1 sm:gap-2">
+          <nav className="flex items-center gap-1 sm:gap-1.5">
             {[
               { id: 'section-hero', label: 'Home' },
               { id: 'section-problem', label: 'Problem' },
@@ -469,7 +469,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className="px-2.5 py-1 rounded-lg text-xs font-bold text-[#455f88] hover:text-[#001849] hover:bg-white transition-all whitespace-nowrap cursor-pointer"
+                className="px-2.5 py-1 rounded-lg text-xs font-bold text-[#B7C5D6] hover:text-[#19C3B1] hover:bg-[#101F31] transition-all whitespace-nowrap cursor-pointer"
               >
                 {item.label}
               </button>
@@ -486,8 +486,8 @@ export const Header: React.FC<HeaderProps> = ({
                 }}
                 className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all flex items-center gap-1 cursor-pointer ${
                   is3DMode
-                    ? 'bg-teal-50 text-[#006767] border-teal-300'
-                    : 'bg-slate-100 text-slate-700 border-slate-200'
+                    ? 'bg-teal-950/80 text-[#38D9C5] border-teal-700/60'
+                    : 'bg-[#101F31] text-[#B7C5D6] border-[#243A50]'
                 }`}
               >
                 <Sparkles className="w-3 h-3" />
@@ -500,7 +500,7 @@ export const Header: React.FC<HeaderProps> = ({
                 sound.playClick();
                 onRoleChange('HEALTHCARE_WORKER');
               }}
-              className="px-3 py-1 rounded-lg text-xs font-black bg-[#7c3aed] text-white hover:bg-[#6d28d9] shadow-2xs transition-all cursor-pointer whitespace-nowrap"
+              className="px-3 py-1 rounded-lg text-xs font-black bg-[#8B7CFF] text-[#07111F] hover:bg-[#7b6cee] shadow-xs transition-all cursor-pointer whitespace-nowrap"
             >
               Clinician Portal
             </button>

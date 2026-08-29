@@ -174,26 +174,26 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
   };
 
   return (
-    <div id="caregiver-dashboard-view" className="space-y-6 pb-12">
+    <div id="caregiver-dashboard-view" className="space-y-6 pb-12 text-[#F4F8FC]">
       {/* Caregiver Welcome & Real-Time Patient Status */}
-      <div className="bg-white rounded-3xl p-6 border border-[#dae1ff] shadow-xs">
+      <div className="bg-[#101F31] rounded-3xl p-6 border border-[#243A50] shadow-xl">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="bg-[#e2e7ff] text-[#002b74] px-3 py-0.5 rounded-full text-xs font-bold flex items-center gap-1.5">
-                <HeartHandshake className="w-3.5 h-3.5 text-[#006767]" />
+              <span className="bg-[#14283D] text-[#38D9C5] border border-[#243A50] px-3 py-0.5 rounded-full text-xs font-bold flex items-center gap-1.5">
+                <HeartHandshake className="w-3.5 h-3.5 text-[#19C3B1]" />
                 Primary Caregiver Portal
               </span>
-              <span className="text-xs font-semibold text-[#006767]">
+              <span className="text-xs font-semibold text-[#38D9C5]">
                 Logged in as {patient.caregiverName} ({patient.caregiverRelationship})
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-black text-[#001849]">
+            <h2 className="text-2xl sm:text-3xl font-black text-[#F4F8FC]">
               Monitoring {patient.name} (Age {patient.age})
             </h2>
 
-            <p className="text-xs font-medium text-[#455f88] flex items-center gap-2">
+            <p className="text-xs font-medium text-[#B7C5D6] flex items-center gap-2">
               <span>Stage: {patient.dementiaStage}</span>
               <span>•</span>
               <span>Doctor: {patient.assignedDoctor}</span>
@@ -208,7 +208,7 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
                 sound.playClick();
                 setShowReportModal(true);
               }}
-              className="min-h-[48px] px-4 bg-[#001849] hover:bg-[#002b74] text-white font-black text-xs sm:text-sm rounded-2xl flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95 cursor-pointer"
+              className="min-h-[48px] px-4 bg-[#8B7CFF] hover:bg-[#7b6cee] text-[#07111F] font-black text-xs sm:text-sm rounded-2xl flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95 cursor-pointer"
             >
               <FileText className="w-4 h-4" />
               <span>ASHA / Clinical Report</span>
@@ -220,7 +220,7 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
                 sound.playClick();
                 setShowFamilyAlbumModal(true);
               }}
-              className="min-h-[48px] px-4 bg-[#be185d] hover:bg-[#9d174d] text-white font-black text-xs sm:text-sm rounded-2xl flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95 cursor-pointer"
+              className="min-h-[48px] px-4 bg-pink-600 hover:bg-pink-500 text-white font-black text-xs sm:text-sm rounded-2xl flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95 cursor-pointer"
             >
               <ImageIcon className="w-4 h-4" />
               <span>Manage Family Album</span>
@@ -229,7 +229,7 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
             <button
               id="send-remote-voice-nudge-btn"
               onClick={handleSendVoiceNudge}
-              className="flex-1 sm:flex-initial min-h-[48px] px-4 bg-[#006767] hover:bg-[#208181] text-white font-bold text-sm rounded-2xl flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95 cursor-pointer"
+              className="flex-1 sm:flex-initial min-h-[48px] px-4 bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F] font-black text-sm rounded-2xl flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95 cursor-pointer"
             >
               {isPromptSent ? (
                 <>
@@ -246,59 +246,59 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
 
             <a
               href={`tel:${patient.caregiverPhone}`}
-              className="min-h-[48px] px-4 bg-[#f2f3ff] hover:bg-[#eaedff] text-[#001849] border border-[#dae1ff] font-bold text-sm rounded-2xl flex items-center justify-center gap-2 transition-all"
+              className="min-h-[48px] px-4 bg-[#14283D] hover:bg-[#162B40] text-[#F4F8FC] border border-[#243A50] font-bold text-sm rounded-2xl flex items-center justify-center gap-2 transition-all"
             >
-              <Phone className="w-4 h-4 text-[#006767]" />
+              <Phone className="w-4 h-4 text-[#38D9C5]" />
               <span>Speed Call</span>
             </a>
           </div>
         </div>
 
         {/* 4 Status Tiles: Battery, Online Sync, Safe Zone Location, Today Compliance */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-6 border-t border-[#dae1ff]">
-          <div className="bg-[#f2f3ff] p-4 rounded-2xl border border-[#dae1ff]">
-            <span className="text-[11px] font-bold text-[#455f88] uppercase block">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-6 border-t border-[#243A50]">
+          <div className="bg-[#14283D] p-4 rounded-2xl border border-[#243A50]">
+            <span className="text-[11px] font-bold text-[#7F91A6] uppercase block">
               Device Battery
             </span>
             <div className="flex items-center gap-2 mt-1">
-              <BatteryCharging className="w-5 h-5 text-emerald-600" />
-              <span className="text-xl font-extrabold text-[#001849]">
+              <BatteryCharging className="w-5 h-5 text-emerald-400" />
+              <span className="text-xl font-extrabold text-[#F4F8FC]">
                 {patient.batteryLevel}% (Healthy)
               </span>
             </div>
           </div>
 
-          <div className="bg-[#f2f3ff] p-4 rounded-2xl border border-[#dae1ff]">
-            <span className="text-[11px] font-bold text-[#455f88] uppercase block">
+          <div className="bg-[#14283D] p-4 rounded-2xl border border-[#243A50]">
+            <span className="text-[11px] font-bold text-[#7F91A6] uppercase block">
               Sync Connectivity
             </span>
             <div className="flex items-center gap-2 mt-1">
-              <Wifi className="w-5 h-5 text-blue-600" />
-              <span className="text-xl font-extrabold text-[#001849]">
+              <Wifi className="w-5 h-5 text-blue-400" />
+              <span className="text-xl font-extrabold text-[#F4F8FC]">
                 Online • Active
               </span>
             </div>
           </div>
 
-          <div className="bg-[#f2f3ff] p-4 rounded-2xl border border-[#dae1ff]">
-            <span className="text-[11px] font-bold text-[#455f88] uppercase block">
+          <div className="bg-[#14283D] p-4 rounded-2xl border border-[#243A50]">
+            <span className="text-[11px] font-bold text-[#7F91A6] uppercase block">
               Location / Geo-Fence
             </span>
             <div className="flex items-center gap-2 mt-1">
-              <MapPin className="w-5 h-5 text-teal-600" />
-              <span className="text-xl font-extrabold text-[#001849]">
+              <MapPin className="w-5 h-5 text-[#38D9C5]" />
+              <span className="text-xl font-extrabold text-[#F4F8FC]">
                 Inside Safe Zone
               </span>
             </div>
           </div>
 
-          <div className="bg-[#f2f3ff] p-4 rounded-2xl border border-[#dae1ff]">
-            <span className="text-[11px] font-bold text-[#455f88] uppercase block">
+          <div className="bg-[#14283D] p-4 rounded-2xl border border-[#243A50]">
+            <span className="text-[11px] font-bold text-[#7F91A6] uppercase block">
               Routine Adherence
             </span>
             <div className="flex items-center gap-2 mt-1">
-              <Activity className="w-5 h-5 text-purple-600" />
-              <span className="text-xl font-extrabold text-[#001849]">
+              <Activity className="w-5 h-5 text-purple-400" />
+              <span className="text-xl font-extrabold text-[#F4F8FC]">
                 {analytics?.reminderAdherenceRate || 94}% On Time
               </span>
             </div>
@@ -311,17 +311,17 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
         {/* Left Column (2 Cols): Routine Schedule & Geo-Fencing */}
         <div className="lg:col-span-2 space-y-6">
           {/* Today's Medication & Routine Schedule */}
-          <div className="bg-white rounded-3xl p-6 border border-[#dae1ff] shadow-xs space-y-4">
+          <div className="bg-[#101F31] rounded-3xl p-6 border border-[#243A50] shadow-xl space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Pill className="w-5 h-5 text-[#006767]" />
-                <h3 className="text-xl font-black text-[#001849]">
+                <Pill className="w-5 h-5 text-[#38D9C5]" />
+                <h3 className="text-xl font-black text-[#F4F8FC]">
                   Today's Caregiver Schedule Checklist
                 </h3>
               </div>
               <button
                 onClick={onOpenReminders}
-                className="text-xs font-bold text-[#006767] hover:underline"
+                className="text-xs font-bold text-[#38D9C5] hover:underline cursor-pointer"
               >
                 Manage All
               </button>
@@ -336,8 +336,8 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
                     key={rem.id}
                     className={`p-4 rounded-2xl border flex items-center justify-between gap-4 transition-all ${
                       isCompleted
-                        ? 'bg-[#f0fdf4] border-[#86efac]'
-                        : 'bg-[#faf8ff] border-[#dae1ff]'
+                        ? 'bg-emerald-950/40 border-emerald-800/80 text-emerald-200'
+                        : 'bg-[#14283D] border-[#243A50] text-[#F4F8FC]'
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -345,16 +345,16 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
                         className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm ${
                           isCompleted
                             ? 'bg-emerald-600 text-white'
-                            : 'bg-[#e2e7ff] text-[#001849]'
+                            : 'bg-[#162B40] text-[#38D9C5] border border-[#243A50]'
                         }`}
                       >
                         {isCompleted ? '✓' : '⏰'}
                       </div>
                       <div>
-                        <h4 className="text-sm font-extrabold text-[#001849]">
+                        <h4 className="text-sm font-extrabold text-[#F4F8FC]">
                           {rem.title}
                         </h4>
-                        <p className="text-xs text-[#455f88]">
+                        <p className="text-xs text-[#B7C5D6]">
                           {rem.scheduledTime} • {rem.dosageOrDetails}
                         </p>
                       </div>
@@ -363,8 +363,8 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
                     <span
                       className={`text-xs font-bold px-2.5 py-1 rounded-full uppercase ${
                         isCompleted
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-amber-100 text-amber-800'
+                          ? 'bg-emerald-950 text-emerald-300 border border-emerald-800'
+                          : 'bg-amber-950 text-amber-300 border border-amber-800'
                       }`}
                     >
                       {rem.status}
@@ -376,20 +376,20 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
           </div>
 
           {/* Safe Zone Geofencing & Location Assurance */}
-          <div className="bg-white rounded-3xl p-6 border border-[#dae1ff] shadow-xs space-y-4">
+          <div className="bg-[#101F31] rounded-3xl p-6 border border-[#243A50] shadow-xl space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-teal-600" />
-                <h3 className="text-xl font-black text-[#001849]">
+                <ShieldCheck className="w-5 h-5 text-[#38D9C5]" />
+                <h3 className="text-xl font-black text-[#F4F8FC]">
                   Smart Safe-Zone Geofence
                 </h3>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-[#455f88]">Radius:</span>
+                <span className="text-xs font-bold text-[#7F91A6]">Radius:</span>
                 <select
                   value={safeZoneRadius}
                   onChange={(e) => setSafeZoneRadius(e.target.value)}
-                  className="bg-[#f2f3ff] text-xs font-bold text-[#001849] rounded-lg px-2 py-1 border border-[#dae1ff]"
+                  className="bg-[#14283D] text-xs font-bold text-[#F4F8FC] rounded-lg px-2 py-1 border border-[#243A50]"
                 >
                   <option value="300m">300 meters (Home Perimeter)</option>
                   <option value="500m">500 meters (Neighborhood)</option>
@@ -399,19 +399,19 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
             </div>
 
             {/* Visual Safe Zone Map Representation */}
-            <div className="bg-gradient-to-br from-emerald-50 to-teal-100 border border-teal-200 rounded-2xl p-6 relative overflow-hidden text-center space-y-3">
-              <div className="w-16 h-16 rounded-full bg-teal-600 text-white flex items-center justify-center mx-auto shadow-md ring-8 ring-teal-200/60 animate-pulse">
+            <div className="bg-gradient-to-br from-[#0B1726] to-[#14283D] border border-[#243A50] rounded-2xl p-6 relative overflow-hidden text-center space-y-3">
+              <div className="w-16 h-16 rounded-full bg-[#19C3B1] text-[#07111F] flex items-center justify-center mx-auto shadow-md ring-8 ring-teal-500/20 animate-pulse">
                 <MapPin className="w-8 h-8" />
               </div>
               <div>
-                <h4 className="font-extrabold text-base text-[#001849]">
+                <h4 className="font-extrabold text-base text-[#F4F8FC]">
                   Patient is Currently Safe at Home Residence
                 </h4>
-                <p className="text-xs font-medium text-teal-900 mt-0.5">
+                <p className="text-xs font-medium text-[#38D9C5] mt-0.5">
                   Guwahati Residence (Lat: 26.1445° N, Long: 91.7362° E) • Within {safeZoneRadius}
                 </p>
               </div>
-              <span className="inline-block bg-white text-teal-800 text-xs font-bold px-3 py-1 rounded-full shadow-xs">
+              <span className="inline-block bg-[#101F31] border border-[#243A50] text-[#38D9C5] text-xs font-bold px-3 py-1 rounded-full shadow-xs">
                 Active GPS & Wi-Fi Geofence Monitoring
               </span>
             </div>
@@ -427,29 +427,29 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
         {/* Right Column (1 Col): Cognitive Performance & Caregiver Notes */}
         <div className="space-y-6">
           {/* Cognitive Stats Card */}
-          <div className="bg-white rounded-3xl p-6 border border-[#dae1ff] shadow-xs space-y-4">
+          <div className="bg-[#101F31] rounded-3xl p-6 border border-[#243A50] shadow-xl space-y-4">
             <div className="flex items-center gap-2">
-              <Brain className="w-5 h-5 text-[#006767]" />
-              <h3 className="text-lg font-black text-[#001849]">
+              <Brain className="w-5 h-5 text-[#38D9C5]" />
+              <h3 className="text-lg font-black text-[#F4F8FC]">
                 Cognitive Performance
               </h3>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-[#f2f3ff] p-3.5 rounded-2xl border border-[#dae1ff]">
-                <span className="text-[11px] font-bold text-[#455f88] block">
+              <div className="bg-[#14283D] p-3.5 rounded-2xl border border-[#243A50]">
+                <span className="text-[11px] font-bold text-[#7F91A6] block">
                   Avg Accuracy
                 </span>
-                <span className="text-2xl font-black text-[#006767]">
+                <span className="text-2xl font-black text-[#38D9C5]">
                   {analytics?.overallAverageAccuracy || 88}%
                 </span>
               </div>
 
-              <div className="bg-[#f2f3ff] p-3.5 rounded-2xl border border-[#dae1ff]">
-                <span className="text-[11px] font-bold text-[#455f88] block">
+              <div className="bg-[#14283D] p-3.5 rounded-2xl border border-[#243A50]">
+                <span className="text-[11px] font-bold text-[#7F91A6] block">
                   Total Sessions
                 </span>
-                <span className="text-2xl font-black text-[#001849]">
+                <span className="text-2xl font-black text-[#F4F8FC]">
                   {sessions.length} Completed
                 </span>
               </div>
@@ -457,10 +457,10 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
 
             {/* Weekly Completion Bar Chart */}
             <div className="space-y-2 pt-2">
-              <span className="text-xs font-bold text-[#455f88] uppercase block">
+              <span className="text-xs font-bold text-[#7F91A6] uppercase block">
                 7-Day Activity Trend
               </span>
-              <div className="flex items-end justify-between gap-1 h-28 bg-[#f2f3ff] p-3 rounded-2xl border border-[#dae1ff]">
+              <div className="flex items-end justify-between gap-1 h-28 bg-[#14283D] p-3 rounded-2xl border border-[#243A50]">
                 {analytics?.weeklyTrends?.map((w: any, idx: number) => (
                   <div
                     key={idx}
@@ -468,10 +468,10 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
                   >
                     <div
                       style={{ height: `${w.completionRate}%` }}
-                      className="w-full bg-[#006767] rounded-md transition-all hover:bg-[#208181]"
+                      className="w-full bg-[#19C3B1] rounded-md transition-all hover:bg-[#38D9C5]"
                       title={`${w.day}: ${w.completionRate}% completion`}
                     ></div>
-                    <span className="text-[10px] font-bold text-[#455f88]">
+                    <span className="text-[10px] font-bold text-[#7F91A6]">
                       {w.day.substring(0, 3)}
                     </span>
                   </div>
@@ -481,12 +481,12 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
           </div>
 
           {/* Caregiver Daily Observation Notes */}
-          <div className="bg-white rounded-3xl p-6 border border-[#dae1ff] shadow-xs space-y-4">
+          <div className="bg-[#101F31] rounded-3xl p-6 border border-[#243A50] shadow-xl space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-black text-[#001849]">
+              <h3 className="text-lg font-black text-[#F4F8FC]">
                 Caregiver Journal
               </h3>
-              <span className="text-xs text-[#455f88]">Shared with Doctor</span>
+              <span className="text-xs text-[#7F91A6]">Shared with Doctor</span>
             </div>
 
             {/* Add note input */}
@@ -496,14 +496,14 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
                 onChange={(e) => setNewNoteContent(e.target.value)}
                 placeholder="Write an observation (e.g. mood, appetite, clarity, sleep)..."
                 rows={2}
-                className="w-full p-3 bg-[#f2f3ff] text-sm text-[#001849] rounded-xl border border-[#dae1ff] focus:outline-none focus:ring-2 focus:ring-[#006767]"
+                className="w-full p-3 bg-[#14283D] text-sm text-[#F4F8FC] placeholder-[#7F91A6] rounded-xl border border-[#243A50] focus:outline-none focus:ring-2 focus:ring-[#19C3B1]"
               />
 
               <div className="flex items-center justify-between gap-2">
                 <select
                   value={newNoteCategory}
                   onChange={(e) => setNewNoteCategory(e.target.value as any)}
-                  className="bg-[#f2f3ff] text-xs font-bold text-[#001849] rounded-xl px-2.5 py-1.5 border border-[#dae1ff]"
+                  className="bg-[#14283D] text-xs font-bold text-[#F4F8FC] rounded-xl px-2.5 py-1.5 border border-[#243A50]"
                 >
                   <option value="Cognitive">Cognitive</option>
                   <option value="Mood">Mood & Sleep</option>
@@ -513,7 +513,7 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
 
                 <button
                   type="submit"
-                  className="px-4 py-1.5 bg-[#006767] hover:bg-[#208181] text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1 shadow-xs"
+                  className="px-4 py-1.5 bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F] text-xs font-black rounded-xl transition-all flex items-center gap-1 shadow-xs cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" /> Save Note
                 </button>
@@ -525,15 +525,15 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
               {notes.map((n) => (
                 <div
                   key={n.id}
-                  className="p-3.5 rounded-2xl bg-[#f8f9ff] border border-[#dae1ff] space-y-1 text-xs"
+                  className="p-3.5 rounded-2xl bg-[#14283D] border border-[#243A50] space-y-1 text-xs"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-extrabold text-[#001849]">
+                    <span className="font-extrabold text-[#38D9C5]">
                       {n.category}
                     </span>
-                    <span className="text-[#455f88]">{n.date}</span>
+                    <span className="text-[#7F91A6]">{n.date}</span>
                   </div>
-                  <p className="text-[#001849] font-medium">{n.content}</p>
+                  <p className="text-[#F4F8FC] font-medium">{n.content}</p>
                 </div>
               ))}
             </div>
@@ -550,18 +550,18 @@ export const CaregiverDashboard: React.FC<CaregiverDashboardProps> = ({
 
       {/* Caregiver Family Memory Album Management Modal */}
       {showFamilyAlbumModal && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
-          <div className="bg-white rounded-3xl max-w-4xl w-full p-6 border-2 border-[#dae1ff] shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto text-left">
-            <div className="flex items-center justify-between border-b border-[#dae1ff] pb-3">
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-md">
+          <div className="bg-[#101F31] rounded-3xl max-w-4xl w-full p-6 border border-[#243A50] shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto text-left text-[#F4F8FC]">
+            <div className="flex items-center justify-between border-b border-[#243A50] pb-3">
               <div className="flex items-center gap-2">
                 <span className="text-xl">📸</span>
-                <h3 className="text-xl font-black text-[#001849]">
+                <h3 className="text-xl font-black text-[#F4F8FC]">
                   Caregiver Family Album Management
                 </h3>
               </div>
               <button
                 onClick={() => setShowFamilyAlbumModal(false)}
-                className="px-4 py-1.5 bg-[#f2f4fc] hover:bg-[#eaedff] text-[#001849] font-bold text-xs rounded-xl cursor-pointer"
+                className="px-4 py-1.5 bg-[#14283D] hover:bg-[#162B40] text-[#F4F8FC] font-bold text-xs rounded-xl border border-[#243A50] cursor-pointer"
               >
                 Close Album
               </button>

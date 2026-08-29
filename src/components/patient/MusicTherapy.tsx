@@ -239,18 +239,18 @@ export const MusicTherapy: React.FC<MusicTherapyProps> = ({ currentLang }) => {
   };
 
   return (
-    <div id="music-therapy-view" className="space-y-6">
+    <div id="music-therapy-view" className="space-y-6 text-[#F4F8FC]">
       {/* Header Banner */}
-      <div className="bg-white rounded-3xl p-6 border border-[#dae1ff] shadow-xs flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-[#101F31] rounded-3xl p-6 border border-[#243A50] shadow-xl flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#eaedff] text-[#006767] flex items-center justify-center shadow-xs">
+          <div className="w-12 h-12 rounded-2xl bg-[#14283D] text-[#38D9C5] border border-[#243A50] flex items-center justify-center shadow-xs">
             <Headphones className="w-7 h-7" />
           </div>
           <div>
-            <h2 className="text-2xl font-extrabold text-[#001849]">
+            <h2 className="text-2xl font-black text-[#F4F8FC]">
               Peaceful North East Soundscapes
             </h2>
-            <p className="text-sm font-semibold text-[#455f88]">
+            <p className="text-sm font-semibold text-[#B7C5D6]">
               Therapeutic audio designed to soothe evening restlessness and sundowning
             </p>
           </div>
@@ -258,8 +258,8 @@ export const MusicTherapy: React.FC<MusicTherapyProps> = ({ currentLang }) => {
 
         {/* Volume Slider */}
         {isPlaying && (
-          <div className="flex items-center gap-2 bg-[#f2f3ff] px-4 py-2 rounded-2xl border border-[#dae1ff]">
-            <Volume2 className="w-4 h-4 text-[#006767]" />
+          <div className="flex items-center gap-2 bg-[#14283D] px-4 py-2 rounded-2xl border border-[#243A50]">
+            <Volume2 className="w-4 h-4 text-[#38D9C5]" />
             <input
               type="range"
               min="0"
@@ -267,7 +267,7 @@ export const MusicTherapy: React.FC<MusicTherapyProps> = ({ currentLang }) => {
               step="0.05"
               value={volume}
               onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
-              className="w-24 accent-[#006767] cursor-pointer"
+              className="w-24 accent-[#19C3B1] cursor-pointer"
             />
           </div>
         )}
@@ -276,17 +276,17 @@ export const MusicTherapy: React.FC<MusicTherapyProps> = ({ currentLang }) => {
       {/* Currently Playing Hero Card */}
       {activeSoundscape && (
         <div
-          className={`rounded-3xl p-6 sm:p-8 text-white bg-gradient-to-r ${activeSoundscape.bgGradient} shadow-xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6`}
+          className={`rounded-3xl p-6 sm:p-8 text-[#F4F8FC] bg-[#14283D] border-2 border-[#19C3B1] shadow-2xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6`}
         >
           <div className="space-y-2 text-center sm:text-left">
-            <span className="bg-white/20 backdrop-blur-xs px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+            <span className="bg-[#101F31] text-[#38D9C5] border border-[#243A50] px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider">
               {isPlaying ? 'Now Soothing Mind' : 'Paused'}
             </span>
-            <h3 className="text-3xl font-black">{activeSoundscape.title}</h3>
-            <p className="text-teal-100 text-base max-w-lg">
+            <h3 className="text-3xl font-black text-[#F4F8FC]">{activeSoundscape.title}</h3>
+            <p className="text-[#B7C5D6] text-base max-w-lg">
               {activeSoundscape.description}
             </p>
-            <span className="text-xs text-white/80 block">
+            <span className="text-xs text-[#7F91A6] block font-bold">
               Origin: {activeSoundscape.region}
             </span>
           </div>
@@ -303,7 +303,7 @@ export const MusicTherapy: React.FC<MusicTherapyProps> = ({ currentLang }) => {
                 setIsPlaying(true);
               }
             }}
-            className="w-20 h-20 rounded-full bg-white text-[#006767] hover:bg-teal-50 flex items-center justify-center shadow-2xl transition-transform active:scale-95 shrink-0"
+            className="w-20 h-20 rounded-full bg-[#19C3B1] text-[#07111F] hover:bg-[#38D9C5] flex items-center justify-center shadow-2xl transition-transform active:scale-95 shrink-0 cursor-pointer"
           >
             {isPlaying ? (
               <Pause className="w-9 h-9 fill-current" />
@@ -324,24 +324,24 @@ export const MusicTherapy: React.FC<MusicTherapyProps> = ({ currentLang }) => {
               key={snd.id}
               id={`soundscape-card-${snd.id}`}
               onClick={() => handleSelectSoundscape(snd)}
-              className={`p-5 rounded-3xl border-2 transition-all cursor-pointer shadow-xs flex items-center justify-between gap-4 ${
+              className={`p-5 rounded-3xl border transition-all cursor-pointer shadow-md flex items-center justify-between gap-4 ${
                 isActive
-                  ? 'bg-[#e2e7ff] border-[#006767] ring-4 ring-teal-100'
-                  : 'bg-white border-[#dae1ff] hover:border-[#006767] hover:bg-[#faf8ff]'
+                  ? 'bg-[#14283D] border-[#19C3B1] ring-2 ring-[#19C3B1]/40'
+                  : 'bg-[#101F31] border-[#243A50] hover:border-[#19C3B1] hover:bg-[#14283D]'
               }`}
             >
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-[#f2f3ff] border border-[#dae1ff] flex items-center justify-center text-3xl shrink-0">
+                <div className="w-14 h-14 rounded-2xl bg-[#14283D] border border-[#243A50] flex items-center justify-center text-3xl shrink-0">
                   {snd.emoji}
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-base text-[#001849]">
+                  <h4 className="font-black text-base text-[#F4F8FC]">
                     {snd.title}
                   </h4>
-                  <span className="text-xs font-semibold text-[#006767] block">
+                  <span className="text-xs font-bold text-[#38D9C5] block">
                     {snd.regionalTitle}
                   </span>
-                  <p className="text-xs text-[#455f88] line-clamp-1 mt-0.5">
+                  <p className="text-xs text-[#B7C5D6] line-clamp-1 mt-0.5">
                     {snd.description}
                   </p>
                 </div>
@@ -350,8 +350,8 @@ export const MusicTherapy: React.FC<MusicTherapyProps> = ({ currentLang }) => {
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
                   isActive && isPlaying
-                    ? 'bg-[#006767] text-white animate-pulse'
-                    : 'bg-[#f2f3ff] text-[#455f88]'
+                    ? 'bg-[#19C3B1] text-[#07111F] animate-pulse'
+                    : 'bg-[#14283D] text-[#B7C5D6] border border-[#243A50]'
                 }`}
               >
                 {isActive && isPlaying ? (

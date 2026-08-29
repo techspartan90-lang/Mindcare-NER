@@ -187,7 +187,7 @@ export default function App() {
       className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
         isHighContrast
           ? 'bg-black text-yellow-300 contrast-125'
-          : 'bg-[#f8f9ff] text-[#001849]'
+          : 'bg-[#07111F] text-[#F4F8FC]'
       } ${
         fontSize === 'large' || accessibilityMode === 'LARGE_TEXT'
           ? 'text-base'
@@ -240,7 +240,7 @@ export default function App() {
         {currentRole === 'PATIENT' && (
           <div className="space-y-6">
             {/* Sub-Navigation Tabs for Patient */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-[#dae1ff]">
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-[#243A50]">
               <button
                 id="patient-nav-home"
                 onClick={() => {
@@ -249,8 +249,8 @@ export default function App() {
                 }}
                 className={`px-4 py-2 rounded-2xl font-extrabold text-sm transition-all whitespace-nowrap cursor-pointer ${
                   patientView === 'dashboard'
-                    ? 'bg-[#006767] text-white shadow-xs'
-                    : 'bg-white text-[#455f88] hover:bg-[#eaedff] border border-[#dae1ff]'
+                    ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
+                    : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC] border border-[#243A50]'
                 }`}
               >
                 🏠 Home Hub
@@ -264,8 +264,8 @@ export default function App() {
                 }}
                 className={`px-4 py-2 rounded-2xl font-extrabold text-sm transition-all whitespace-nowrap cursor-pointer ${
                   patientView === 'games'
-                    ? 'bg-[#006767] text-white shadow-xs'
-                    : 'bg-white text-[#455f88] hover:bg-[#eaedff] border border-[#dae1ff]'
+                    ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
+                    : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC] border border-[#243A50]'
                 }`}
               >
                 🧩 Cognitive Games & Sounds
@@ -279,8 +279,8 @@ export default function App() {
                 }}
                 className={`px-4 py-2 rounded-2xl font-extrabold text-sm transition-all whitespace-nowrap cursor-pointer ${
                   patientView === 'reminders'
-                    ? 'bg-[#006767] text-white shadow-xs'
-                    : 'bg-white text-[#455f88] hover:bg-[#eaedff] border border-[#dae1ff]'
+                    ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
+                    : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC] border border-[#243A50]'
                 }`}
               >
                 💊 Daily Schedule & Meds
@@ -294,8 +294,8 @@ export default function App() {
                 }}
                 className={`px-4 py-2 rounded-2xl font-extrabold text-sm transition-all whitespace-nowrap cursor-pointer ${
                   patientView === 'family'
-                    ? 'bg-[#006767] text-white shadow-xs'
-                    : 'bg-white text-[#455f88] hover:bg-[#eaedff] border border-[#dae1ff]'
+                    ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
+                    : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC] border border-[#243A50]'
                 }`}
               >
                 ❤️ Family Connect
@@ -309,8 +309,8 @@ export default function App() {
                 }}
                 className={`px-4 py-2 rounded-2xl font-extrabold text-sm transition-all whitespace-nowrap cursor-pointer ${
                   patientView === 'music'
-                    ? 'bg-[#006767] text-white shadow-xs'
-                    : 'bg-white text-[#455f88] hover:bg-[#eaedff] border border-[#dae1ff]'
+                    ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
+                    : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC] border border-[#243A50]'
                 }`}
               >
                 🌊 Peaceful Music & River

@@ -138,18 +138,18 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
   };
 
   return (
-    <div id="reminders-main-view" className="space-y-6">
+    <div id="reminders-main-view" className="space-y-6 text-[#F4F8FC]">
       {/* Header Banner */}
-      <div className="bg-white rounded-3xl p-6 border border-[#dae1ff] shadow-xs flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-[#101F31] rounded-3xl p-6 border border-[#243A50] shadow-xl flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#006767] text-white flex items-center justify-center shadow-xs">
-            <Bell className="w-7 h-7" />
+          <div className="w-12 h-12 rounded-2xl bg-[#19C3B1] text-[#07111F] flex items-center justify-center shadow-xs">
+            <Bell className="w-7 h-7 stroke-[2.5]" />
           </div>
           <div>
-            <h2 className="text-2xl font-extrabold text-[#001849]">
+            <h2 className="text-2xl font-black text-[#F4F8FC]">
               {t.remindersTitle}
             </h2>
-            <p className="text-sm font-semibold text-[#455f88]">
+            <p className="text-sm font-semibold text-[#B7C5D6]">
               Never miss your daily medicines, fresh water, or appointments
             </p>
           </div>
@@ -161,9 +161,9 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
             sound.playClick();
             setIsAddModalOpen(true);
           }}
-          className="min-h-[48px] px-5 bg-[#006767] hover:bg-[#208181] text-white text-sm font-bold rounded-2xl flex items-center gap-2 shadow-xs transition-transform active:scale-95"
+          className="min-h-[48px] px-5 bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F] text-sm font-black rounded-2xl flex items-center gap-2 shadow-xs transition-transform active:scale-95 cursor-pointer"
         >
-          <Plus className="w-5 h-5" />
+          <Plus className="w-5 h-5 stroke-[2.5]" />
           <span>Add Reminder</span>
         </button>
       </div>
@@ -179,23 +179,23 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
             <div
               key={reminder.id}
               id={`reminder-item-${reminder.id}`}
-              className={`bg-white rounded-3xl p-5 sm:p-6 border-2 transition-all shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
+              className={`bg-[#101F31] rounded-3xl p-5 sm:p-6 border transition-all shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
                 isDone
-                  ? 'border-emerald-200 bg-[#f8fffe] opacity-80'
+                  ? 'border-emerald-800/60 bg-[#101F31]/80 opacity-80'
                   : isSnoozed
-                  ? 'border-amber-300 bg-[#fffbeb]'
-                  : 'border-[#dae1ff] hover:border-[#006767]'
+                  ? 'border-amber-800/80 bg-[#14283D]'
+                  : 'border-[#243A50] hover:border-[#19C3B1]'
               }`}
             >
               {/* Icon & Title */}
               <div className="flex items-start gap-4">
                 <div
-                  className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 text-white shadow-xs ${
+                  className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-xs ${
                     isDone
-                      ? 'bg-emerald-600'
+                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
                       : isSnoozed
-                      ? 'bg-amber-500'
-                      : 'bg-[#006767]'
+                      ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
+                      : 'bg-[#14283D] text-[#38D9C5] border border-[#243A50]'
                   }`}
                 >
                   <IconComponent className="w-7 h-7" />
@@ -203,16 +203,16 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
 
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="bg-[#e2e7ff] text-[#002b74] px-2.5 py-0.5 rounded-full text-xs font-black">
+                    <span className="bg-[#14283D] text-[#F4F8FC] border border-[#243A50] px-2.5 py-0.5 rounded-full text-xs font-black">
                       {reminder.scheduledTime}
                     </span>
                     <span
-                      className={`text-[11px] font-extrabold px-2.5 py-0.5 rounded-full uppercase ${
+                      className={`text-[11px] font-black px-2.5 py-0.5 rounded-full uppercase border ${
                         isDone
-                          ? 'bg-emerald-100 text-emerald-800'
+                          ? 'bg-emerald-950/80 text-emerald-300 border-emerald-800'
                           : isSnoozed
-                          ? 'bg-amber-100 text-amber-800'
-                          : 'bg-teal-100 text-teal-800'
+                          ? 'bg-amber-950/80 text-amber-300 border-amber-800'
+                          : 'bg-[#14283D] text-[#38D9C5] border-[#243A50]'
                       }`}
                     >
                       {isDone ? t.completed : isSnoozed ? t.snoozed : t.upcoming}
@@ -220,15 +220,15 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
                   </div>
 
                   <h3
-                    className={`text-xl font-extrabold text-[#001849] ${
-                      isDone ? 'line-through text-gray-500' : ''
+                    className={`text-xl font-black text-[#F4F8FC] ${
+                      isDone ? 'line-through text-[#7F91A6]' : ''
                     }`}
                   >
                     {reminder.title}
                   </h3>
 
                   {reminder.dosageOrDetails && (
-                    <p className="text-sm font-semibold text-[#455f88]">
+                    <p className="text-sm font-semibold text-[#B7C5D6]">
                       {reminder.dosageOrDetails}
                     </p>
                   )}
@@ -241,7 +241,7 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
                   <button
                     id={`snooze-btn-${reminder.id}`}
                     onClick={() => handleSnooze(reminder)}
-                    className="min-h-[52px] px-4 bg-[#f2f3ff] hover:bg-[#eaedff] text-[#8a4c27] text-xs font-extrabold rounded-2xl border border-[#dae1ff] flex items-center justify-center gap-1.5 transition-all flex-1 sm:flex-initial"
+                    className="min-h-[52px] px-4 bg-[#14283D] hover:bg-[#162B40] text-[#F4B740] text-xs font-black rounded-2xl border border-[#243A50] flex items-center justify-center gap-1.5 transition-all flex-1 sm:flex-initial cursor-pointer"
                   >
                     <Clock className="w-4 h-4" />
                     <span>{t.snooze10m}</span>
@@ -251,13 +251,13 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
                 <button
                   id={`toggle-done-btn-${reminder.id}`}
                   onClick={() => handleToggleStatus(reminder)}
-                  className={`min-h-[52px] px-6 text-sm font-extrabold rounded-2xl flex items-center justify-center gap-2 shadow-xs transition-transform active:scale-95 flex-1 sm:flex-initial ${
+                  className={`min-h-[52px] px-6 text-sm font-black rounded-2xl flex items-center justify-center gap-2 shadow-xs transition-transform active:scale-95 flex-1 sm:flex-initial cursor-pointer ${
                     isDone
-                      ? 'bg-white hover:bg-gray-100 text-gray-700 border-2 border-gray-300'
-                      : 'bg-[#006767] hover:bg-[#208181] text-white'
+                      ? 'bg-[#14283D] hover:bg-[#162B40] text-[#B7C5D6] border border-[#243A50]'
+                      : 'bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F]'
                   }`}
                 >
-                  <CheckCircle2 className="w-5 h-5" />
+                  <CheckCircle2 className="w-5 h-5 stroke-[2.5]" />
                   <span>{isDone ? 'Completed' : t.markDone}</span>
                 </button>
               </div>
@@ -268,15 +268,15 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
 
       {/* Add Reminder Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border-4 border-[#006767] space-y-4">
-            <h3 className="text-2xl font-extrabold text-[#001849]">
+        <div className="fixed inset-0 z-50 bg-[#07111F]/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#101F31] rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-[#243A50] space-y-4 text-[#F4F8FC]">
+            <h3 className="text-2xl font-black text-[#F4F8FC]">
               Add Routine Reminder
             </h3>
 
             <form onSubmit={handleCreateReminder} className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-[#455f88] block mb-1">
+                <label className="text-xs font-bold text-[#B7C5D6] block mb-1">
                   Reminder Title
                 </label>
                 <input
@@ -285,13 +285,13 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
                   placeholder="e.g. Evening Multivitamin Capsule"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full p-3.5 bg-[#f2f3ff] border border-[#dae1ff] rounded-xl text-base font-semibold text-[#001849] focus:outline-none focus:ring-2 focus:ring-[#006767]"
+                  className="w-full p-3.5 bg-[#14283D] border border-[#243A50] rounded-xl text-base font-semibold text-[#F4F8FC] placeholder-[#7F91A6] focus:outline-none focus:border-[#19C3B1]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-bold text-[#455f88] block mb-1">
+                  <label className="text-xs font-bold text-[#B7C5D6] block mb-1">
                     Scheduled Time
                   </label>
                   <input
@@ -300,18 +300,18 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
                     placeholder="e.g. 05:30 PM"
                     value={newTime}
                     onChange={(e) => setNewTime(e.target.value)}
-                    className="w-full p-3.5 bg-[#f2f3ff] border border-[#dae1ff] rounded-xl text-base font-semibold text-[#001849] focus:outline-none focus:ring-2 focus:ring-[#006767]"
+                    className="w-full p-3.5 bg-[#14283D] border border-[#243A50] rounded-xl text-base font-semibold text-[#F4F8FC] placeholder-[#7F91A6] focus:outline-none focus:border-[#19C3B1]"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-[#455f88] block mb-1">
+                  <label className="text-xs font-bold text-[#B7C5D6] block mb-1">
                     Type
                   </label>
                   <select
                     value={newType}
                     onChange={(e) => setNewType(e.target.value as ReminderItem['type'])}
-                    className="w-full p-3.5 bg-[#f2f3ff] border border-[#dae1ff] rounded-xl text-sm font-semibold text-[#001849] focus:outline-none focus:ring-2 focus:ring-[#006767]"
+                    className="w-full p-3.5 bg-[#14283D] border border-[#243A50] rounded-xl text-sm font-semibold text-[#F4F8FC] focus:outline-none focus:border-[#19C3B1]"
                   >
                     <option value="MEDICINE">Medicine</option>
                     <option value="HYDRATION">Hydration</option>
@@ -322,7 +322,7 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#455f88] block mb-1">
+                <label className="text-xs font-bold text-[#B7C5D6] block mb-1">
                   Dosage / Instructions
                 </label>
                 <input
@@ -330,7 +330,7 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
                   placeholder="e.g. 1 Tablet after meal with water"
                   value={newDetails}
                   onChange={(e) => setNewDetails(e.target.value)}
-                  className="w-full p-3.5 bg-[#f2f3ff] border border-[#dae1ff] rounded-xl text-base font-semibold text-[#001849] focus:outline-none focus:ring-2 focus:ring-[#006767]"
+                  className="w-full p-3.5 bg-[#14283D] border border-[#243A50] rounded-xl text-base font-semibold text-[#F4F8FC] placeholder-[#7F91A6] focus:outline-none focus:border-[#19C3B1]"
                 />
               </div>
 
@@ -338,13 +338,13 @@ export const RemindersView: React.FC<RemindersViewProps> = ({ currentLang }) => 
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="flex-1 min-h-[48px] bg-white border border-[#dae1ff] text-[#455f88] font-bold rounded-xl hover:bg-[#eaedff]"
+                  className="flex-1 min-h-[48px] bg-[#14283D] border border-[#243A50] text-[#B7C5D6] font-black rounded-xl hover:bg-[#162B40] hover:text-[#F4F8FC] cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 min-h-[48px] bg-[#006767] hover:bg-[#208181] text-white font-bold rounded-xl shadow-xs"
+                  className="flex-1 min-h-[48px] bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F] font-black rounded-xl shadow-xs cursor-pointer"
                 >
                   Save Reminder
                 </button>

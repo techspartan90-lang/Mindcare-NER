@@ -1,101 +1,60 @@
-# MindCare NER — System Architecture & Design Specification
+# MindCare NER — Complete System Architecture
 
-**Platform:** MindCare NER (Cognitive Digital Therapeutics for North East India)  
-**Architecture Style:** Offline-First, Privacy-Preserving Full-Stack Micro-Monolith  
-**Tech Stack:** React 18 (TypeScript), Vite, Tailwind CSS, Web Audio API, Node.js / Express, PostgreSQL / Supabase, Google GenAI (Gemini 2.5/3.7 Flash)
+## 1. System Overview
+MindCare NER is an AI-enabled cognitive assistance and longitudinal activity monitoring platform built specifically for elderly users, family caregivers, clinicians, and community health workers in North East India.
 
----
+```mermaid
+graph TD
+    User([User: Senior / Caregiver / Clinician]) --> PresentationLayer[Presentation & Spatial Layer]
+    
+    subgraph Presentation & Spatial Layer
+        PresentationLayer --> Hub3D[3D Central Nexus / Three.js Canvas]
+        PresentationLayer --> Standard2D[High-Contrast 2D Standard View]
+        PresentationLayer --> UniversalHeader[Universal Navigation & Role Switcher]
+        PresentationLayer --> RolePortals[Senior / Caregiver / Doctor / Admin Portals]
+    end
 
-## 1. High-Level System Architecture
+    subgraph Service & Engine Layer
+        RolePortals --> AudioEngine[Speech & Voice Engine (7 NE Dialects)]
+        RolePortals --> GameEngine[Cognitive Exercises & MoCA Scoring]
+        RolePortals --> RoutineEngine[Circadian Pacing & Reminders]
+        RolePortals --> SyncEngine[Offline-First Synchronization Service]
+        RolePortals --> AIEngine[Dynamic Difficulty Adaptation - DDA]
+    end
 
-MindCare NER is engineered specifically for the challenging healthcare landscape of North East India, characterized by frequent cellular drops, multilingual elderly demographics (8 indigenous languages), and the need for non-stigmatizing, culturally grounded cognitive support.
-
-```
-+-----------------------------------------------------------------------------------+
-|                              CLIENT-SIDE EDGE APP                                 |
-|                                                                                   |
-|  +---------------------+  +----------------------+  +--------------------------+  |
-|  |  Patient Experience |  | Caregiver Dashboard  |  | Healthcare Worker Portal |  |
-|  |  - Cognitive Games  |  | - Alert Center       |  | - Non-Diagnostic Reports|  |
-|  |  - Daily Schedule   |  | - Memory Album Mgt   |  | - 30-Day Trend Analysis |  |
-|  |  - Memory Garden    |  | - Routine Config     |  | - CSV / Print Export    |  |
-|  +----------+----------+  +----------+-----------+  +------------+-------------+  |
-|             |                        |                           |                |
-|             +------------------------+---------------------------+                |
-|                                      |                                            |
-|                                      v                                            |
-|  +-----------------------------------------------------------------------------+  |
-|  |                       OFFLINE PERSISTENCE & SYNC ENGINE                     |  |
-|  |  - OfflineSyncManager (IndexedDB / LocalStorage State Storage)              |  |
-|  |  - Optimistic Mutation Queue with Exponential Backoff                       |  |
-|  |  - Dynamic Network Listener & Conflict Detection (Server Timestamp Bias)    |  |
-|  +-----------------------------------+-----------------------------------------+  |
-|                                      | (When Online: Batch Sync / REST API)       |
-+--------------------------------------|--------------------------------------------+
-                                       v
-+-----------------------------------------------------------------------------------+
-|                              BACKEND SERVICE LAYER                                |
-|                                                                                   |
-|  +---------------------+  +----------------------+  +--------------------------+  |
-|  | Synchronization API |  | ActivityPlanService  |  | CaregiverAlertCenter     |  |
-|  | POST /api/sync      |  | - AdaptiveCognitive  |  | - Missed Reminders       |  |
-|  | GET  /api/sync/stat |  | - Rule + Gemini Flash|  | - Inactivity / Battery   |  |
-|  +----------+----------+  +----------+-----------+  +------------+-------------+  |
-|             |                        |                           |                |
-|             +------------------------+---------------------------+                |
-|                                      |                                            |
-|                                      v                                            |
-|  +-----------------------------------------------------------------------------+  |
-|  |                        DATA ACCESS & STORAGE LAYER                          |  |
-|  |  - Relational Database (PostgreSQL / Supabase Schemas)                      |  |
-|  |  - Media Storage: Secure Blob Storage for Approved Family Photos & Audio   |  |
-|  |  - Audit Log Collector for Role-Based Action Tracking                       |  |
-|  +-----------------------------------------------------------------------------+  |
-+-----------------------------------------------------------------------------------+
+    subgraph Persistence & Infrastructure Layer
+        SyncEngine --> LocalVault[On-Device SQLite / Local Storage]
+        SyncEngine --> RESTAPI[Node.js / Express REST Endpoints]
+        RESTAPI --> InMemStore[Transactional In-Memory Store & DB Sync]
+        RESTAPI --> ABDMBridge[ABDM / FHIR Clinical Export Pipeline]
+    end
 ```
 
----
+## 2. Core Architecture Tiers
 
-## 2. Core Subsystems
+### A. Presentation & Spatial Layer
+* **3D Central Nexus:** Powered by Three.js / Canvas, rendering 14+ surrounding spatial pavilions with camera orbit, zoom, pan, and smooth transitions.
+* **Standard 2D Interface:** Fully accessible, WCAG 2.2 AAA compliant alternative providing complete feature parity without WebGL dependencies.
+* **Role-Based Portals:**
+  1. *Patient Experience:* 64px+ oversized touch buttons, voice-guided prompts, morning tea greetings, memory blossoms.
+  2. *Caregiver Portal:* Real-time medication verification, mood tracking, daily routine pacing, one-tap voice note dispatcher.
+  3. *Clinician Dashboard:* Longitudinal MoCA/MMSE domain analytics, response latency drifts, clinical progress export.
+  4. *Admin Console:* Regional language pack management, audit logs, sync queues, system telemetry.
 
-### 2.1 Adaptive Cognitive Engine (`AdaptiveCognitiveEngine`)
-- Evaluates recent session accuracy, response latency, and attempts across 8 cognitive categories.
-- Determines whether to increment, maintain, or simplify task difficulty (Gentle, Easy, Medium, Progressive).
-- Dual-layer processing:
-  1. Deterministic clinical rule matrix ensuring sub-10ms response even completely offline.
-  2. Server-side Gemini AI expansion providing compassionate, natural-language caregiver rationales.
+### B. Service & Intelligence Layer
+* **Dynamic Difficulty Adaptation (DDA):** Evaluates latency and accuracy on-device to adjust grid size and hints dynamically, eliminating user frustration.
+* **Acoustic & Multilingual Engine:** Native speech synthesis and recognition supporting Assamese, Bengali, Meitei, Mizo, Khasi, Hindi, and Indian English.
+* **Circadian Pacing:** Time-of-day contextual cues transitioning from morning recall exercises to late-afternoon hydration and evening soothing music.
 
-### 2.2 Activity Recommendation & Daily Routine Engine (`ActivityPlanService`)
-- Architecture:
-  ```
-  Patient Activity Data
-         ↓
-  AdaptiveCognitiveEngine (Performance Analysis)
-         ↓
-  ActivityRecommendationEngine (Balancing Categories & Time Slots)
-         ↓
-  DailyActivityPlan (Morning Focus, Afternoon Reminiscence, Evening Relaxation)
-         ↓
-  Patient Dashboard View
-  ```
-
-### 2.3 Offline Synchronization Subsystem (`OfflineSyncManager`)
-- Guarantees zero data loss during connectivity blackouts.
-- All game completions, reminder check-offs, and emotional check-ins write immediately to local storage.
-- Synchronization Service performs idempotent batch upserts when network connectivity resumes.
-
-### 2.4 Caregiver Alert & Safety Center (`CaregiverAlertCenter`)
-- Real-time triaging of clinical and operational anomalies:
-  - `MISSED_MEDICINE`
-  - `DEVICE_OFFLINE`
-  - `COGNITIVE_DROP`
-  - `SYNC_DELAY`
-  - `ASSISTANCE_REQUEST`
-- Multi-state lifecycle: `UNREAD` -> `ACKNOWLEDGED` -> `RESOLVED`.
+### C. Offline-First Resilience Layer
+* **Local-First SQLite Vault:** Encrypted on-device storage ensuring 100% functionality during mountain weather disruptions and power outages.
+* **Silent Background Delta Sync:** Detects cellular/Wi-Fi signal recovery and queues encrypted transactional payloads to the cloud.
 
 ---
 
-## 3. Deployment & Runtime Constraints
-- **Ingress Port:** 3000 (binds to `0.0.0.0:3000`).
-- **Container Target:** Google Cloud Run.
-- **Node.js Environment:** ES Module / TypeScript via `tsx` dev server and single-bundle CommonJS production server `dist/server.cjs`.
+## 3. Technology Stack Summary
+* **Frontend Framework:** React 19, TypeScript, Vite
+* **Spatial & 3D:** Three.js, React Three Fiber, Drei, HTML5 Canvas
+* **Styling & Design System:** Tailwind CSS, Lucide Icons, Recharts
+* **Backend Runtime:** Node.js, Express, TSX
+* **AI & Acoustic Services:** On-Device DDA Algorithms, Google GenAI SDK integration, Web Speech API

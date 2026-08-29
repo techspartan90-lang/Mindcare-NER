@@ -360,9 +360,9 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
         centerY,
         width * 0.48
       );
-      bgGradient.addColorStop(0, 'rgba(0, 103, 103, 0.08)');
-      bgGradient.addColorStop(0.5, 'rgba(2, 132, 199, 0.04)');
-      bgGradient.addColorStop(1, 'rgba(248, 250, 255, 0)');
+      bgGradient.addColorStop(0, 'rgba(25, 195, 177, 0.12)');
+      bgGradient.addColorStop(0.5, 'rgba(91, 167, 255, 0.06)');
+      bgGradient.addColorStop(1, 'rgba(7, 17, 31, 0)');
       ctx.fillStyle = bgGradient;
       ctx.fillRect(0, 0, width, height);
 
@@ -371,7 +371,7 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
       orbits.forEach((radius, idx) => {
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius * zoomLevel, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(0, 103, 103, ${0.12 - idx * 0.03})`;
+        ctx.strokeStyle = `rgba(56, 217, 197, ${0.18 - idx * 0.04})`;
         ctx.lineWidth = 1.5;
         ctx.setLineDash([4, 6]);
         ctx.stroke();
@@ -389,29 +389,29 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
         centerY,
         52 * zoomLevel
       );
-      coreGradient.addColorStop(0, '#006767');
-      coreGradient.addColorStop(0.7, '#004d4d');
-      coreGradient.addColorStop(1, '#001849');
+      coreGradient.addColorStop(0, '#101F31');
+      coreGradient.addColorStop(0.7, '#0B1726');
+      coreGradient.addColorStop(1, '#07111F');
       ctx.fillStyle = coreGradient;
-      ctx.shadowColor = 'rgba(0, 103, 103, 0.4)';
-      ctx.shadowBlur = 18;
+      ctx.shadowColor = 'rgba(25, 195, 177, 0.5)';
+      ctx.shadowBlur = 22;
       ctx.fill();
       ctx.shadowBlur = 0;
 
       // Core Outer Pulsing Ring
       ctx.beginPath();
       ctx.arc(centerX, centerY, (62 + Math.sin(Date.now() / 400) * 3) * zoomLevel, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(6, 182, 212, 0.35)';
+      ctx.strokeStyle = 'rgba(25, 195, 177, 0.5)';
       ctx.lineWidth = 2;
       ctx.stroke();
 
       // Central Hub Label
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = '#F4F8FC';
       ctx.font = `bold ${Math.max(10, 11 * zoomLevel)}px sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('MINDCARE', centerX, centerY - 6 * zoomLevel);
-      ctx.fillStyle = '#5eead4';
+      ctx.fillStyle = '#38D9C5';
       ctx.font = `800 ${Math.max(9, 10 * zoomLevel)}px sans-serif`;
       ctx.fillText('CENTRAL HUB', centerX, centerY + 8 * zoomLevel);
 
@@ -429,9 +429,9 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
         ctx.moveTo(centerX, centerY);
         ctx.lineTo(x, y);
         ctx.strokeStyle = isSelected
-          ? 'rgba(0, 103, 103, 0.6)'
-          : 'rgba(218, 225, 255, 0.4)';
-        ctx.lineWidth = isSelected ? 2.2 : 1;
+          ? 'rgba(25, 195, 177, 0.7)'
+          : 'rgba(36, 58, 80, 0.6)';
+        ctx.lineWidth = isSelected ? 2.5 : 1.2;
         ctx.stroke();
 
         // Pavilion Node
@@ -440,23 +440,23 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
         ctx.arc(x, y, nodeRadius, 0, Math.PI * 2);
         ctx.fillStyle = zone.color;
         ctx.shadowColor = zone.glowColor;
-        ctx.shadowBlur = isSelected ? 22 : 10;
+        ctx.shadowBlur = isSelected ? 25 : 12;
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = '#F4F8FC';
         ctx.lineWidth = isSelected ? 3 : 1.5;
         ctx.stroke();
 
         // Node Number
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = '#F4F8FC';
         ctx.font = `bold ${Math.max(9, 10 * zoomLevel)}px sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(String(zone.number), x, y);
 
         // Node Label below
-        ctx.fillStyle = isSelected ? '#001849' : '#455f88';
+        ctx.fillStyle = isSelected ? '#38D9C5' : '#B7C5D6';
         ctx.font = `${isSelected ? 'bold' : '600'} ${Math.max(9, 10 * zoomLevel)}px sans-serif`;
         ctx.fillText(zone.name, x, y + nodeRadius + 11 * zoomLevel);
       });
@@ -510,19 +510,19 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
   return (
     <div
       id="mindcare-central-3d-hub"
-      className="bg-white rounded-3xl border-2 border-[#dae1ff] p-6 lg:p-8 shadow-xl space-y-6"
+      className="bg-[#0B1726]/95 backdrop-blur-md rounded-3xl border border-[#243A50] p-6 lg:p-8 shadow-2xl space-y-6 text-[#F4F8FC]"
     >
       {/* Hub Header & Perspective Controls */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[#243A50] pb-5">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-[#006767] text-xs font-black uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-950/80 border border-teal-700/60 text-[#38D9C5] text-xs font-black uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Interactive 3D Ecosystem • 14 Pavilions</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-[#001849] tracking-tight mt-1.5">
+          <h2 className="text-2xl sm:text-3xl font-black text-[#F4F8FC] tracking-tight mt-1.5">
             MINDCARE CENTRAL HUB
           </h2>
-          <p className="text-sm text-[#455f88] font-medium">
+          <p className="text-sm text-[#B7C5D6] font-medium">
             Explore the connected pavilions powering North East India's cognitive care network.
           </p>
         </div>
@@ -536,8 +536,8 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
             }}
             className={`px-3 py-1.5 rounded-xl text-xs font-extrabold border transition-all flex items-center gap-1.5 cursor-pointer ${
               isAutoRotating
-                ? 'bg-teal-50 text-teal-800 border-teal-300'
-                : 'bg-slate-100 text-slate-700 border-slate-200'
+                ? 'bg-teal-950/80 text-[#38D9C5] border-teal-700/60'
+                : 'bg-[#101F31] text-[#B7C5D6] border-[#243A50]'
             }`}
             title="Toggle Orbit Rotation"
           >
@@ -550,10 +550,10 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
               sound.playClick();
               setZoomLevel((prev) => (prev === 1 ? 1.18 : prev === 1.18 ? 0.85 : 1));
             }}
-            className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-[#001849] border border-[#dae1ff] hover:bg-slate-50 flex items-center gap-1.5 cursor-pointer"
+            className="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#101F31] text-[#F4F8FC] border border-[#243A50] hover:bg-[#14283D] flex items-center gap-1.5 cursor-pointer"
             title="Adjust Zoom Perspective"
           >
-            <Maximize2 className="w-3.5 h-3.5 text-[#006767]" />
+            <Maximize2 className="w-3.5 h-3.5 text-[#19C3B1]" />
             <span>Zoom {Math.round(zoomLevel * 100)}%</span>
           </button>
 
@@ -563,7 +563,7 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
               setRotationAngle(0);
               setZoomLevel(1);
             }}
-            className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-[#455f88] border border-slate-200 hover:bg-slate-50 cursor-pointer"
+            className="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#101F31] text-[#B7C5D6] border border-[#243A50] hover:bg-[#14283D] hover:text-[#F4F8FC] cursor-pointer"
             title="Reset Camera View"
           >
             Reset
@@ -573,7 +573,7 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
 
       {/* Filter Category Tabs */}
       <div className="flex flex-wrap items-center gap-1.5">
-        <span className="text-xs font-bold text-[#455f88] mr-2">Filter Pavilions:</span>
+        <span className="text-xs font-bold text-[#7F91A6] mr-2">Filter Pavilions:</span>
         {[
           { id: 'all', label: 'All 14 Zones' },
           { id: 'patient', label: 'Elder & Patient' },
@@ -590,8 +590,8 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
             }}
             className={`px-3 py-1 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
               activeCategoryFilter === tab.id
-                ? 'bg-[#006767] text-white shadow-xs'
-                : 'bg-slate-100 text-[#455f88] hover:bg-slate-200'
+                ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
+                : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC] border border-[#243A50]'
             }`}
           >
             {tab.label}
@@ -602,7 +602,7 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
       {/* Main 3D Canvas & Zone Details Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
         {/* Interactive 3D Orbit Canvas */}
-        <div className="lg:col-span-7 relative bg-gradient-to-b from-[#f8faff] to-[#edf3fc] rounded-2xl border border-[#dae1ff] overflow-hidden p-2 flex items-center justify-center min-h-[380px] sm:min-h-[440px]">
+        <div className="lg:col-span-7 relative bg-gradient-to-b from-[#07111F] via-[#0B1726] to-[#101F31] rounded-2xl border border-[#243A50] overflow-hidden p-2 flex items-center justify-center min-h-[380px] sm:min-h-[440px]">
           <canvas
             ref={canvasRef}
             width={580}
@@ -611,8 +611,8 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
             className="w-full max-w-[580px] h-auto cursor-crosshair select-none"
           />
 
-          <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-xs px-3 py-1 rounded-xl text-[11px] font-bold text-[#455f88] border border-slate-200 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-teal-500 animate-ping"></span>
+          <div className="absolute bottom-3 left-3 bg-[#0B1726]/90 backdrop-blur-xs px-3 py-1 rounded-xl text-[11px] font-bold text-[#B7C5D6] border border-[#243A50] flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#19C3B1] animate-ping"></span>
             <span>Click any pavilion node to inspect</span>
           </div>
         </div>
@@ -620,7 +620,7 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
         {/* Selected Zone Inspector Panel */}
         <div className="lg:col-span-5 space-y-4">
           {selectedZone ? (
-            <div className="bg-white rounded-2xl border-2 border-[#dae1ff] p-6 shadow-md space-y-4 relative overflow-hidden">
+            <div className="bg-[#101F31] rounded-2xl border border-[#243A50] p-6 shadow-xl space-y-4 relative overflow-hidden">
               <div
                 className="absolute top-0 left-0 w-full h-1.5"
                 style={{ backgroundColor: selectedZone.color }}
@@ -630,28 +630,28 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
                 <span
                   className="text-xs font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full"
                   style={{
-                    backgroundColor: `${selectedZone.color}15`,
+                    backgroundColor: `${selectedZone.color}25`,
                     color: selectedZone.color,
                   }}
                 >
                   Zone #{selectedZone.number} • {selectedZone.tag}
                 </span>
-                <span className="text-xs font-extrabold text-[#455f88] bg-slate-100 px-2 py-0.5 rounded">
+                <span className="text-xs font-extrabold text-[#B7C5D6] bg-[#14283D] px-2 py-0.5 rounded border border-[#243A50]">
                   {selectedZone.keyMetric}
                 </span>
               </div>
 
               <div>
-                <h3 className="text-xl font-black text-[#001849] flex items-center gap-2">
+                <h3 className="text-xl font-black text-[#F4F8FC] flex items-center gap-2">
                   <selectedZone.icon className="w-5 h-5" style={{ color: selectedZone.color }} />
                   {selectedZone.name}
                 </h3>
-                <p className="text-sm font-semibold text-[#006767] mt-0.5">
+                <p className="text-sm font-semibold text-[#38D9C5] mt-0.5">
                   {selectedZone.shortDesc}
                 </p>
               </div>
 
-              <p className="text-xs text-[#3e4948] leading-relaxed">
+              <p className="text-xs text-[#B7C5D6] leading-relaxed">
                 {selectedZone.fullDesc}
               </p>
 
@@ -662,7 +662,7 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
                     sound.playClick();
                     onNavigateSection(selectedZone.targetSectionId);
                   }}
-                  className="w-full py-2.5 px-4 rounded-xl text-white font-extrabold text-xs shadow-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-xl text-[#07111F] font-black text-xs shadow-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer hover:brightness-110"
                   style={{ backgroundColor: selectedZone.color }}
                 >
                   <span>Enter {selectedZone.name}</span>
@@ -677,15 +677,15 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
                       PAVILION_ZONES.length;
                     setSelectedZone(PAVILION_ZONES[nextIndex]);
                   }}
-                  className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#001849] font-bold text-xs border border-slate-200 whitespace-nowrap cursor-pointer"
+                  className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-[#14283D] hover:bg-[#162B40] text-[#F4F8FC] font-bold text-xs border border-[#243A50] whitespace-nowrap cursor-pointer"
                 >
                   Next Zone ➔
                 </button>
               </div>
             </div>
           ) : (
-            <div className="p-8 text-center bg-slate-50 rounded-2xl border border-slate-200">
-              <p className="text-sm font-bold text-[#455f88]">
+            <div className="p-8 text-center bg-[#101F31] rounded-2xl border border-[#243A50]">
+              <p className="text-sm font-bold text-[#B7C5D6]">
                 Select any of the 14 surrounding pavilions to view details.
               </p>
             </div>
@@ -693,7 +693,7 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
 
           {/* Quick 14-Pavilion Pill Grid for Fast Keyboard & Accessible Navigation */}
           <div className="space-y-1.5">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#455f88] block">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#7F91A6] block">
               Direct Zone Navigation:
             </span>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 max-h-[160px] overflow-y-auto pr-1">
@@ -706,8 +706,8 @@ export const MindCare3DHub: React.FC<MindCare3DHubProps> = ({
                   }}
                   className={`p-2 rounded-xl text-left text-xs font-bold transition-all truncate border cursor-pointer ${
                     selectedZone?.id === zone.id
-                      ? 'bg-teal-50 border-teal-500 text-teal-900 ring-1 ring-teal-400'
-                      : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                      ? 'bg-[#14283D] border-[#19C3B1] text-[#38D9C5] ring-1 ring-[#19C3B1]'
+                      : 'bg-[#101F31] border-[#243A50] text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
                   }`}
                 >
                   <span className="text-[10px] opacity-60 mr-1">#{zone.number}</span>
