@@ -114,90 +114,120 @@ export const Header: React.FC<HeaderProps> = ({
           </span>
         </div>
 
-        {/* Role Selector Pill Tabs */}
-        <div className="flex items-center gap-1 bg-[#101F31] p-1 rounded-xl border border-[#243A50]">
-          <span className="text-[11px] font-semibold text-[#7F91A6] px-2 hidden lg:inline">
-            Active View:
-          </span>
-          <button
-            id="role-btn-awareness"
-            onClick={() => {
-              sound.playClick();
-              onRoleChange('AWARENESS');
-            }}
-            className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
-              currentRole === 'AWARENESS'
-                ? 'bg-gradient-to-r from-[#19C3B1] to-[#38D9C5] text-[#07111F] font-black shadow-xs'
-                : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
-            }`}
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Awareness & Journey</span>
-          </button>
+        {/* Mode & Portal Selector */}
+        <div className="flex items-center gap-1.5 flex-wrap">
+          {currentRole !== 'AWARENESS' ? (
+            /* Dashboard Active: Show Return to Landing Page CTA */
+            <button
+              id="return-to-landing-btn"
+              onClick={() => {
+                sound.playClick();
+                onRoleChange('AWARENESS');
+              }}
+              className="px-3 py-1 bg-[#14283D] hover:bg-[#162B40] text-[#38D9C5] border border-[#243A50] hover:border-[#19C3B1] rounded-xl font-black text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
+            >
+              <span>← Back to Landing Page</span>
+            </button>
+          ) : (
+            /* Landing Page Active: Show Direct Dashboard Launch CTA */
+            <button
+              id="launch-dashboard-top-btn"
+              onClick={() => {
+                sound.playClick();
+                onRoleChange('PATIENT');
+              }}
+              className="px-3.5 py-1 bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F] rounded-xl font-black text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-md active:scale-95"
+            >
+              <Brain className="w-3.5 h-3.5" />
+              <span>🚀 Launch App Dashboard</span>
+            </button>
+          )}
 
-          <button
-            id="role-btn-patient"
-            onClick={() => {
-              sound.playClick();
-              onRoleChange('PATIENT');
-            }}
-            className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
-              currentRole === 'PATIENT'
-                ? 'bg-[#19C3B1] text-[#07111F] font-black shadow-xs'
-                : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
-            }`}
-          >
-            <UserCheck className="w-3.5 h-3.5" />
-            <span>Patient (Dhiren, 72)</span>
-          </button>
+          {/* Role Selector Pill Tabs */}
+          <div className="flex items-center gap-1 bg-[#101F31] p-1 rounded-xl border border-[#243A50]">
+            <span className="text-[11px] font-semibold text-[#7F91A6] px-2 hidden xl:inline">
+              Portals:
+            </span>
+            <button
+              id="role-btn-awareness"
+              onClick={() => {
+                sound.playClick();
+                onRoleChange('AWARENESS');
+              }}
+              className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
+                currentRole === 'AWARENESS'
+                  ? 'bg-gradient-to-r from-[#19C3B1] to-[#38D9C5] text-[#07111F] font-black shadow-xs'
+                  : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Landing Page</span>
+            </button>
 
-          <button
-            id="role-btn-caregiver"
-            onClick={() => {
-              sound.playClick();
-              onRoleChange('CAREGIVER');
-            }}
-            className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
-              currentRole === 'CAREGIVER'
-                ? 'bg-[#5BA7FF] text-[#07111F] font-black shadow-xs'
-                : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
-            }`}
-          >
-            <HeartHandshake className="w-3.5 h-3.5" />
-            <span>Caregiver (Priyanka)</span>
-          </button>
+            <button
+              id="role-btn-patient"
+              onClick={() => {
+                sound.playClick();
+                onRoleChange('PATIENT');
+              }}
+              className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
+                currentRole === 'PATIENT'
+                  ? 'bg-[#19C3B1] text-[#07111F] font-black shadow-xs'
+                  : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
+              }`}
+            >
+              <UserCheck className="w-3.5 h-3.5" />
+              <span>Patient Dashboard</span>
+            </button>
 
-          <button
-            id="role-btn-doctor"
-            onClick={() => {
-              sound.playClick();
-              onRoleChange('HEALTHCARE_WORKER');
-            }}
-            className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
-              currentRole === 'HEALTHCARE_WORKER'
-                ? 'bg-[#8B7CFF] text-[#07111F] font-black shadow-xs'
-                : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
-            }`}
-          >
-            <Stethoscope className="w-3.5 h-3.5" />
-            <span>Clinician (Dr. Ananya)</span>
-          </button>
+            <button
+              id="role-btn-caregiver"
+              onClick={() => {
+                sound.playClick();
+                onRoleChange('CAREGIVER');
+              }}
+              className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
+                currentRole === 'CAREGIVER'
+                  ? 'bg-[#5BA7FF] text-[#07111F] font-black shadow-xs'
+                  : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
+              }`}
+            >
+              <HeartHandshake className="w-3.5 h-3.5" />
+              <span>Caregiver Portal</span>
+            </button>
 
-          <button
-            id="role-btn-admin"
-            onClick={() => {
-              sound.playClick();
-              onRoleChange('ADMIN');
-            }}
-            className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
-              currentRole === 'ADMIN'
-                ? 'bg-[#F4B740] text-[#07111F] font-black shadow-xs'
-                : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
-            }`}
-          >
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Admin & Arch</span>
-          </button>
+            <button
+              id="role-btn-doctor"
+              onClick={() => {
+                sound.playClick();
+                onRoleChange('HEALTHCARE_WORKER');
+              }}
+              className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
+                currentRole === 'HEALTHCARE_WORKER'
+                  ? 'bg-[#8B7CFF] text-[#07111F] font-black shadow-xs'
+                  : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
+              }`}
+            >
+              <Stethoscope className="w-3.5 h-3.5" />
+              <span>Clinician Telemetry</span>
+            </button>
+
+            <button
+              id="role-btn-admin"
+              onClick={() => {
+                sound.playClick();
+                onRoleChange('ADMIN');
+              }}
+              className={`px-2.5 py-1 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
+                currentRole === 'ADMIN'
+                  ? 'bg-[#F4B740] text-[#07111F] font-black shadow-xs'
+                  : 'text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC]'
+              }`}
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Admin Console</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -494,6 +524,18 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>{is3DMode ? '3D Active' : '2D Mode'}</span>
               </button>
             )}
+
+            <button
+              id="open-dashboard-taskbar-btn"
+              onClick={() => {
+                sound.playClick();
+                onRoleChange('PATIENT');
+              }}
+              className="px-3.5 py-1 rounded-lg text-xs font-black bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F] shadow-xs transition-all cursor-pointer whitespace-nowrap active:scale-95 flex items-center gap-1.5"
+            >
+              <Brain className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>Open Dashboard</span>
+            </button>
 
             <button
               onClick={() => {

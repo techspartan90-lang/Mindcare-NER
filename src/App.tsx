@@ -236,6 +236,95 @@ export default function App() {
           />
         )}
 
+        {/* DEDICATED DASHBOARD WORKSPACE TOP BAR */}
+        {currentRole !== 'AWARENESS' && (
+          <div className="bg-[#101F31] rounded-2xl border border-[#243A50] p-4 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+            <div className="flex items-center gap-3">
+              <button
+                id="back-to-landing-dashboard-btn"
+                onClick={() => {
+                  sound.playClick();
+                  setCurrentRole('AWARENESS');
+                }}
+                className="px-3.5 py-1.5 bg-[#14283D] hover:bg-[#162B40] text-[#38D9C5] border border-[#243A50] hover:border-[#19C3B1] rounded-xl font-black text-xs flex items-center gap-1.5 cursor-pointer shadow-xs transition-all"
+              >
+                <span>← Back to Landing Page</span>
+              </button>
+              <div className="h-4 w-[1px] bg-[#243A50] hidden sm:block" />
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#19C3B1] animate-pulse" />
+                <span className="text-xs font-black text-[#F4F8FC] uppercase tracking-wide">
+                  {currentRole === 'PATIENT'
+                    ? 'Patient Senior Tablet Workspace'
+                    : currentRole === 'CAREGIVER'
+                    ? 'Caregiver Remote Monitoring Workspace'
+                    : currentRole === 'HEALTHCARE_WORKER'
+                    ? 'Clinician Telemetry & Analytics Dome'
+                    : 'Admin Management & Architecture'}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-[11px] font-bold text-[#7F91A6] hidden md:inline">
+                Switch Portal:
+              </span>
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  setCurrentRole('PATIENT');
+                }}
+                className={`px-3 py-1 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                  currentRole === 'PATIENT'
+                    ? 'bg-[#19C3B1] text-[#07111F]'
+                    : 'bg-[#14283D] text-[#B7C5D6] hover:text-[#F4F8FC] border border-[#243A50]'
+                }`}
+              >
+                Senior Tablet
+              </button>
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  setCurrentRole('CAREGIVER');
+                }}
+                className={`px-3 py-1 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                  currentRole === 'CAREGIVER'
+                    ? 'bg-[#5BA7FF] text-[#07111F]'
+                    : 'bg-[#14283D] text-[#B7C5D6] hover:text-[#F4F8FC] border border-[#243A50]'
+                }`}
+              >
+                Caregiver
+              </button>
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  setCurrentRole('HEALTHCARE_WORKER');
+                }}
+                className={`px-3 py-1 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                  currentRole === 'HEALTHCARE_WORKER'
+                    ? 'bg-[#8B7CFF] text-[#07111F]'
+                    : 'bg-[#14283D] text-[#B7C5D6] hover:text-[#F4F8FC] border border-[#243A50]'
+                }`}
+              >
+                Clinician
+              </button>
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  setCurrentRole('ADMIN');
+                }}
+                className={`px-3 py-1 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                  currentRole === 'ADMIN'
+                    ? 'bg-[#F4B740] text-[#07111F]'
+                    : 'bg-[#14283D] text-[#B7C5D6] hover:text-[#F4F8FC] border border-[#243A50]'
+                }`}
+              >
+                Admin
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* PATIENT ROLE EXPERIENCE */}
         {currentRole === 'PATIENT' && (
           <div className="space-y-6">
