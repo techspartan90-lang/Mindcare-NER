@@ -398,6 +398,9 @@ export default function App() {
         onClose={() => setIsVoiceAssistantOpen(false)}
         patient={patient}
         currentLang={currentLang}
+        onLanguageChange={(lang) => {
+          setCurrentLang(lang);
+        }}
         onPlayGame={() => {
           setIsVoiceAssistantOpen(false);
           setPatientView('games');

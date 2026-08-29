@@ -122,7 +122,8 @@ export const PatientDashboard: React.FC<PatientDashboardProps> = ({
 
   const handleReadOrientation = () => {
     sound.playClick();
-    const text = `Namaskar ${patient.name}. Today is ${currentDateStr}, and the current time is ${currentTimeStr}. You are safe at home in ${patient.location}.`;
+    const greetingWord = currentLang === 'as' ? 'নমস্কাৰ' : currentLang === 'bn' ? 'নমস্কার' : currentLang === 'hi' ? 'नमस्ते' : 'Hello';
+    const text = `${greetingWord} ${patient.name}. Today is ${currentDateStr}, and the current time is ${currentTimeStr}. You are safe at home in ${patient.location}.`;
     voice.speak(text, currentLang);
   };
 

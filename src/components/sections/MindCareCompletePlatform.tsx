@@ -495,10 +495,10 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
                 </div>
                 <div className="space-y-1">
                   <h3 className="font-black text-[#F4F8FC] text-base">
-                    Welcome back, Dhiren Deuta
+                    Welcome back, Dhiren
                   </h3>
                   <p className="text-xs text-[#38D9C5] font-bold">
-                    "নমস্কাৰ দেউতা, আপোনাৰ চাহৰ পিছত এটা মনৰ খেল খেলিব নেকি?"
+                    "{REGIONAL_PHRASES[currentLang]?.sample || 'Good morning, Dhiren. It is time for your warm tea and morning memory blossom.'}"
                   </p>
                 </div>
 
