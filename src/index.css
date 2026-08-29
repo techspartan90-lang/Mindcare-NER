@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    font-family: 'Lexend', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    color: #001849;
+    background-color: #faf8ff;
+  }
+
+  /* Accessibility focus ring with 3px solid teal for tremor & low vision support */
+  *:focus-visible {
+    outline: 3px solid #006767;
+    outline-offset: 3px;
+  }
+
+  /* High legibility typography defaults */
+  body {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f2f3ff;
+}
+::-webkit-scrollbar-thumb {
+  background: #b6d0ff;
+  border-radius: 9999px;
+  border: 2px solid #f2f3ff;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #455f88;
+}
+
+/* Gentle pulsating animations for voice & memory cues */
+@keyframes soft-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.85; }
+}
+
+.animate-soft-pulse {
+  animation: soft-pulse 2s infinite ease-in-out;
+}
