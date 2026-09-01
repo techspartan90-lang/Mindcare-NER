@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["AGENTS.md"],
+  "permission": {
+    "bash": {
+      "*": "ask",
+      "git status": "allow",
+      "git diff": "allow",
+      "git log *": "allow",
+      "npm run build": "allow",
+      "npm run lint": "allow",
+      "npm run dev": "allow"
+    }
+  },
+  "mcp": {
+    "opencode": {
+      "type": "local",
+      "command": [
+        "opencode",
+        "mcp",
+        "list"
+      ]
+    }
+  }
+}

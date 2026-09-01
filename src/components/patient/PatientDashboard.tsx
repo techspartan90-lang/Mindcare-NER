@@ -155,9 +155,9 @@ export const PatientDashboard: React.FC<PatientDashboardProps> = ({
           <button
             id="read-orientation-btn"
             onClick={handleReadOrientation}
-            className="min-h-[44px] px-4 py-2.5 bg-white/15 hover:bg-white/25 text-white font-extrabold text-xs sm:text-sm rounded-2xl flex items-center justify-center gap-2 border border-white/20 transition-all active:scale-95 cursor-pointer"
+            className="min-h-[64px] px-5 py-3 bg-white/15 hover:bg-white/25 text-white font-extrabold text-sm sm:text-base rounded-2xl flex items-center justify-center gap-2 border border-white/20 transition-all active:scale-95 cursor-pointer"
           >
-            <Volume2 className="w-4 h-4" />
+            <Volume2 className="w-5 h-5" />
             <span>Spoken Time</span>
           </button>
 
@@ -167,9 +167,9 @@ export const PatientDashboard: React.FC<PatientDashboardProps> = ({
               sound.playClick();
               setShowEmotionModal(true);
             }}
-            className="min-h-[44px] px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-amber-950 font-black text-xs sm:text-sm rounded-2xl flex items-center justify-center gap-2 shadow-xs transition-transform active:scale-95 cursor-pointer"
+            className="min-h-[64px] px-6 py-3 bg-amber-400 hover:bg-amber-300 text-amber-950 font-black text-sm sm:text-base rounded-2xl flex items-center justify-center gap-2 shadow-xs transition-transform active:scale-95 cursor-pointer"
           >
-            <Smile className="w-4 h-4" />
+            <Smile className="w-5 h-5" />
             <span>Daily Mood Check-In</span>
           </button>
 
@@ -179,9 +179,9 @@ export const PatientDashboard: React.FC<PatientDashboardProps> = ({
               sound.playClick();
               setShowAssistanceModal(true);
             }}
-            className="min-h-[44px] px-4 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-black text-xs sm:text-sm rounded-2xl flex items-center justify-center gap-2 shadow-xs transition-transform active:scale-95 cursor-pointer"
+            className="min-h-[64px] px-5 py-3 bg-rose-600 hover:bg-rose-500 text-white font-black text-sm sm:text-base rounded-2xl flex items-center justify-center gap-2 shadow-xs transition-transform active:scale-95 cursor-pointer"
           >
-            <PhoneCall className="w-4 h-4" />
+            <PhoneCall className="w-5 h-5" />
             <span>I Need Help</span>
           </button>
         </div>
@@ -194,7 +194,7 @@ export const PatientDashboard: React.FC<PatientDashboardProps> = ({
             sound.playClick();
             setActiveTab('OVERVIEW');
           }}
-          className={`min-h-[44px] px-5 rounded-2xl font-black text-xs sm:text-sm transition-all cursor-pointer ${
+          className={`min-h-[64px] px-6 rounded-2xl font-black text-sm sm:text-base transition-all cursor-pointer ${
             activeTab === 'OVERVIEW'
               ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
               : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] border border-[#243A50]'
@@ -208,13 +208,13 @@ export const PatientDashboard: React.FC<PatientDashboardProps> = ({
             sound.playClick();
             setActiveTab('DAILY_PLAN');
           }}
-          className={`min-h-[44px] px-5 rounded-2xl font-black text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer ${
+          className={`min-h-[64px] px-6 rounded-2xl font-black text-sm sm:text-base transition-all flex items-center gap-2 cursor-pointer ${
             activeTab === 'DAILY_PLAN'
               ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
               : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] border border-[#243A50]'
           }`}
         >
-          <CalendarCheck className="w-4 h-4" />
+          <CalendarCheck className="w-5 h-5" />
           <span>Today's Activity Plan</span>
         </button>
 
@@ -223,13 +223,13 @@ export const PatientDashboard: React.FC<PatientDashboardProps> = ({
             sound.playClick();
             setActiveTab('GARDEN');
           }}
-          className={`min-h-[44px] px-5 rounded-2xl font-black text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer ${
+          className={`min-h-[64px] px-6 rounded-2xl font-black text-sm sm:text-base transition-all flex items-center gap-2 cursor-pointer ${
             activeTab === 'GARDEN'
               ? 'bg-[#8B7CFF] text-[#07111F] font-black shadow-xs'
               : 'bg-[#101F31] text-[#8B7CFF] border border-[#243A50] hover:bg-[#14283D]'
           }`}
         >
-          <Flower2 className="w-4 h-4 text-[#8B7CFF] fill-[#8B7CFF]" />
+          <Flower2 className="w-5 h-5 text-[#8B7CFF] fill-[#8B7CFF]" />
           <span>My Memory Garden (18 Blossoms)</span>
         </button>
       </div>
@@ -246,16 +246,16 @@ export const PatientDashboard: React.FC<PatientDashboardProps> = ({
                 sound.playClick();
                 onOpenGames();
               }}
-              className="bg-[#101F31] hover:bg-[#14283D] p-6 rounded-3xl border border-[#243A50] hover:border-[#19C3B1] shadow-xl text-left flex flex-col justify-between min-h-[180px] transition-all transform active:scale-98 group cursor-pointer"
+              className="bg-[#101F31] hover:bg-[#14283D] p-6 rounded-3xl border border-[#243A50] hover:border-[#19C3B1] shadow-xl text-left flex flex-col justify-between min-h-[200px] transition-all transform active:scale-98 group cursor-pointer"
             >
-              <div className="w-14 h-14 rounded-2xl bg-teal-950/80 text-[#38D9C5] group-hover:bg-[#19C3B1] group-hover:text-[#07111F] flex items-center justify-center text-3xl transition-colors shadow-xs border border-teal-800/60">
+              <div className="w-16 h-16 rounded-2xl bg-teal-950/80 text-[#38D9C5] group-hover:bg-[#19C3B1] group-hover:text-[#07111F] flex items-center justify-center text-4xl transition-colors shadow-xs border border-teal-800/60">
                 🌸
               </div>
               <div>
                 <h3 className="text-2xl font-black text-[#F4F8FC] group-hover:text-[#38D9C5]">
                   {t.gamesTitle}
                 </h3>
-                <p className="text-xs font-semibold text-[#B7C5D6] mt-1">
+                <p className="text-sm font-semibold text-[#B7C5D6] mt-1">
                   Cultural motifs, audio recognition & stories
                 </p>
               </div>
@@ -268,16 +268,16 @@ export const PatientDashboard: React.FC<PatientDashboardProps> = ({
                 sound.playClick();
                 onOpenReminders();
               }}
-              className="bg-[#101F31] hover:bg-[#14283D] p-6 rounded-3xl border border-[#243A50] hover:border-[#F4B740] shadow-xl text-left flex flex-col justify-between min-h-[180px] transition-all transform active:scale-98 group cursor-pointer"
+              className="bg-[#101F31] hover:bg-[#14283D] p-6 rounded-3xl border border-[#243A50] hover:border-[#F4B740] shadow-xl text-left flex flex-col justify-between min-h-[200px] transition-all transform active:scale-98 group cursor-pointer"
             >
-              <div className="w-14 h-14 rounded-2xl bg-amber-950/80 text-amber-300 group-hover:bg-[#F4B740] group-hover:text-[#07111F] flex items-center justify-center text-3xl transition-colors shadow-xs border border-amber-800/60">
+              <div className="w-16 h-16 rounded-2xl bg-amber-950/80 text-amber-300 group-hover:bg-[#F4B740] group-hover:text-[#07111F] flex items-center justify-center text-4xl transition-colors shadow-xs border border-amber-800/60">
                 💊
               </div>
               <div>
                 <h3 className="text-2xl font-black text-[#F4F8FC] group-hover:text-[#F4B740]">
                   {t.dailyRoutine}
                 </h3>
-                <p className="text-xs font-semibold text-[#B7C5D6] mt-1">
+                <p className="text-sm font-semibold text-[#B7C5D6] mt-1">
                   Morning medicine taken • Next at 5:30 PM
                 </p>
               </div>
@@ -290,16 +290,16 @@ export const PatientDashboard: React.FC<PatientDashboardProps> = ({
                 sound.playClick();
                 onOpenFamily();
               }}
-              className="bg-[#101F31] hover:bg-[#14283D] p-6 rounded-3xl border border-[#243A50] hover:border-[#ec4899] shadow-xl text-left flex flex-col justify-between min-h-[180px] transition-all transform active:scale-98 group cursor-pointer"
+              className="bg-[#101F31] hover:bg-[#14283D] p-6 rounded-3xl border border-[#243A50] hover:border-[#ec4899] shadow-xl text-left flex flex-col justify-between min-h-[200px] transition-all transform active:scale-98 group cursor-pointer"
             >
-              <div className="w-14 h-14 rounded-2xl bg-pink-950/80 text-pink-300 group-hover:bg-[#ec4899] group-hover:text-[#07111F] flex items-center justify-center text-3xl transition-colors shadow-xs border border-pink-800/60">
+              <div className="w-16 h-16 rounded-2xl bg-pink-950/80 text-pink-300 group-hover:bg-[#ec4899] group-hover:text-[#07111F] flex items-center justify-center text-4xl transition-colors shadow-xs border border-pink-800/60">
                 ❤️
               </div>
               <div>
                 <h3 className="text-2xl font-black text-[#F4F8FC] group-hover:text-pink-400">
                   {t.familyTitle}
                 </h3>
-                <p className="text-xs font-semibold text-[#B7C5D6] mt-1">
+                <p className="text-sm font-semibold text-[#B7C5D6] mt-1">
                   Priyanka (Daughter) & Arunav (Grandson)
                 </p>
               </div>
@@ -312,16 +312,16 @@ export const PatientDashboard: React.FC<PatientDashboardProps> = ({
                 sound.playClick();
                 onOpenMusic();
               }}
-              className="bg-[#101F31] hover:bg-[#14283D] p-6 rounded-3xl border border-[#243A50] hover:border-[#5BA7FF] shadow-xl text-left flex flex-col justify-between min-h-[180px] transition-all transform active:scale-98 group cursor-pointer"
+              className="bg-[#101F31] hover:bg-[#14283D] p-6 rounded-3xl border border-[#243A50] hover:border-[#5BA7FF] shadow-xl text-left flex flex-col justify-between min-h-[200px] transition-all transform active:scale-98 group cursor-pointer"
             >
-              <div className="w-14 h-14 rounded-2xl bg-blue-950/80 text-blue-300 group-hover:bg-[#5BA7FF] group-hover:text-[#07111F] flex items-center justify-center text-3xl transition-colors shadow-xs border border-blue-800/60">
+              <div className="w-16 h-16 rounded-2xl bg-blue-950/80 text-blue-300 group-hover:bg-[#5BA7FF] group-hover:text-[#07111F] flex items-center justify-center text-4xl transition-colors shadow-xs border border-blue-800/60">
                 🌊
               </div>
               <div>
                 <h3 className="text-2xl font-black text-[#F4F8FC] group-hover:text-[#5BA7FF]">
                   Peaceful Soundscapes
                 </h3>
-                <p className="text-xs font-semibold text-[#B7C5D6] mt-1">
+                <p className="text-sm font-semibold text-[#B7C5D6] mt-1">
                   Brahmaputra waves & soothing bamboo flutes
                 </p>
               </div>

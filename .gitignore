@@ -6,3 +6,9 @@ coverage/
 *.log
 .env*
 !.env.example
+.kilo/
+.opencode/
+.vscode/
+my-app/
+*.n8n
+setup_opencode.cjs

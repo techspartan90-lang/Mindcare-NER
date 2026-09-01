@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Header } from './components/common/Header';
-import { PatientDashboard } from './components/patient/PatientDashboard';
-import { GameContainer } from './components/games/GameContainer';
-import { RemindersView } from './components/reminders/RemindersView';
-import { FamilyConnect } from './components/patient/FamilyConnect';
-import { MusicTherapy } from './components/patient/MusicTherapy';
+import { PublicMarketingHeader } from './components/navigation/PublicMarketingHeader';
+import { DashboardLayout } from './components/dashboard/DashboardLayout';
+import { AuthModal, AuthMode } from './components/auth/AuthModal';
 import { VoiceAssistantModal } from './components/patient/VoiceAssistantModal';
-import { CaregiverDashboard } from './components/caregiver/CaregiverDashboard';
-import { DoctorDashboard } from './components/doctor/DoctorDashboard';
 import { ArchitectureModal } from './components/admin/ArchitectureModal';
 import { AccessibilityDrawer } from './components/common/AccessibilityDrawer';
 import { PrivacyCenterModal } from './components/common/PrivacyCenterModal';
 import { DemonstrationModeModal } from './components/common/DemonstrationModeModal';
-import { AdminConsole } from './components/admin/AdminConsole';
 import { MindCareCompletePlatform } from './components/sections/MindCareCompletePlatform';
-import { AwarenessPlatformJourney } from './components/sections/AwarenessPlatformJourney';
 import {
   PatientProfile,
   SupportedLanguage,
@@ -26,8 +19,13 @@ import { sound } from './services/sound';
 import { voice } from './services/voice';
 import { offlineSync } from './services/offlineSync';
 
+export type ExperienceMode = 'PUBLIC_MARKETING' | 'AUTHENTICATED_APP';
+
 export default function App() {
-  const [currentRole, setCurrentRole] = useState<UserRole>('AWARENESS');
+  // Experience State: Experience 01 (Marketing) vs Experience 02 (Authenticated Dashboard)
+  const [experience, setExperience] = useState<ExperienceMode>('PUBLIC_MARKETING');
+  const [currentRole, setCurrentRole] = useState<UserRole>('PATIENT');
+  const [userName, setUserName] = useState<string>('Dhiren Borah');
   const [is3DMode, setIs3DMode] = useState<boolean>(true);
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>('en');
   const [fontSize, setFontSize] = useState<'normal' | 'large' | 'extra-large'>('large');
@@ -35,11 +33,11 @@ export default function App() {
   const [isOffline, setIsOffline] = useState(false);
   const [pendingSyncCount, setPendingSyncCount] = useState(0);
 
-  // Active view in Patient flow
-  const [patientView, setPatientView] = useState<'dashboard' | 'games' | 'reminders' | 'family' | 'music'>('dashboard');
-  const [selectedGameId, setSelectedGameId] = useState<string | null>(null);
-  
-  // Modals state
+  // Authentication Modal State
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authInitialMode, setAuthInitialMode] = useState<AuthMode>('LOGIN');
+
+  // Global Modals State
   const [isVoiceAssistantOpen, setIsVoiceAssistantOpen] = useState(false);
   const [isArchitectureOpen, setIsArchitectureOpen] = useState(false);
   const [isAccessibilityDrawerOpen, setIsAccessibilityDrawerOpen] = useState(false);
@@ -105,9 +103,35 @@ export default function App() {
     }
   };
 
-  const handleSelectGame = (gameId: string) => {
-    setSelectedGameId(gameId);
-    setPatientView('games');
+  const handleOpenAuth = (mode: AuthMode = 'LOGIN') => {
+    sound.playClick();
+    setAuthInitialMode(mode);
+    setIsAuthModalOpen(true);
+  };
+
+  const handleAuthenticate = (role: UserRole, userDisplayName: string) => {
+    setCurrentRole(role);
+    setUserName(userDisplayName);
+    setExperience('AUTHENTICATED_APP');
+  };
+
+  const handleLogout = () => {
+    sound.playClick();
+    setExperience('PUBLIC_MARKETING');
+  };
+
+  const handleNavigateMarketingSection = (sectionId: string) => {
+    sound.playClick();
+    if (experience !== 'PUBLIC_MARKETING') {
+      setExperience('PUBLIC_MARKETING');
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   // Demonstration Mode Simulation Handler
@@ -144,7 +168,7 @@ export default function App() {
         }));
         setAccessibilityMode('VOICE_FIRST');
         setIsOffline(false);
-        voice.speak('Simulation applied: High-Need Profile. Voice-first guidance and simplified tasks enabled.', currentLang);
+        voice.speak('Simulation applied: High-Need Profile. Voice-first guidance enabled.', currentLang);
         break;
 
       case 'OFFLINE_MODE':
@@ -155,7 +179,6 @@ export default function App() {
           batteryLevel: 62,
         }));
         setIsOffline(true);
-        // Add dummy offline items to queue
         offlineSync.saveLocalSession({
           id: `sess_sim_${Date.now()}`,
           patientId: patient.id,
@@ -177,7 +200,6 @@ export default function App() {
     }
   };
 
-  // Determine root accessibility styles
   const isHighContrast = accessibilityMode === 'HIGH_CONTRAST';
   const isReducedMotion = accessibilityMode === 'REDUCED_MOTION';
 
@@ -196,290 +218,66 @@ export default function App() {
           : 'text-sm'
       } ${isReducedMotion ? 'motion-reduce' : ''}`}
     >
-      {/* Top Application Header */}
-      <Header
-        currentRole={currentRole}
-        onRoleChange={(role) => setCurrentRole(role)}
-        currentLang={currentLang}
-        onLanguageChange={setCurrentLang}
-        isOffline={isOffline}
-        onToggleOffline={handleToggleOffline}
-        pendingSyncCount={pendingSyncCount}
-        fontSize={fontSize}
-        onFontSizeChange={setFontSize}
-        onOpenArchitecture={() => setIsArchitectureOpen(true)}
-        onOpenAccessibility={() => setIsAccessibilityDrawerOpen(true)}
-        onOpenPrivacy={() => setIsPrivacyCenterOpen(true)}
-        onOpenDemonstrationMode={() => setIsDemonstrationModeOpen(true)}
-        onOpenVoiceAssistant={() => setIsVoiceAssistantOpen(true)}
-        is3DMode={is3DMode}
-        onToggle3DMode={() => setIs3DMode((prev) => !prev)}
-      />
-
-      {/* Main Role-Based Views */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
-        {/* AWARENESS & GUIDED PLATFORM JOURNEY (FULL 30-MODULE ECOSYSTEM) */}
-        {currentRole === 'AWARENESS' && (
-          <MindCareCompletePlatform
-            onSelectRole={(role) => setCurrentRole(role)}
-            onOpenVoiceAssistant={() => setIsVoiceAssistantOpen(true)}
-            onOpenArchitecture={() => setIsArchitectureOpen(true)}
-            onOpenPrivacy={() => setIsPrivacyCenterOpen(true)}
-            onOpenAccessibility={() => setIsAccessibilityDrawerOpen(true)}
-            onOpenDemonstrationMode={() => setIsDemonstrationModeOpen(true)}
+      {/* =========================================================================
+          EXPERIENCE 01: PUBLIC MARKETING LANDING WEBSITE
+          ========================================================================= */}
+      {experience === 'PUBLIC_MARKETING' && (
+        <>
+          {/* Public Marketing Header Navigation */}
+          <PublicMarketingHeader
             currentLang={currentLang}
             onLanguageChange={setCurrentLang}
-            isOffline={isOffline}
-            onToggleOffline={handleToggleOffline}
-            is3DMode={is3DMode}
-            onToggle3DMode={() => setIs3DMode((prev) => !prev)}
+            onOpenLogin={() => handleOpenAuth('LOGIN')}
+            onOpenSignUp={() => handleOpenAuth('SIGNUP')}
+            onOpenAccessibility={() => setIsAccessibilityDrawerOpen(true)}
+            onNavigateSection={handleNavigateMarketingSection}
           />
-        )}
 
-        {/* DEDICATED DASHBOARD WORKSPACE TOP BAR */}
-        {currentRole !== 'AWARENESS' && (
-          <div className="bg-[#101F31] rounded-2xl border border-[#243A50] p-4 flex flex-wrap items-center justify-between gap-3 shadow-lg">
-            <div className="flex items-center gap-3">
-              <button
-                id="back-to-landing-dashboard-btn"
-                onClick={() => {
-                  sound.playClick();
-                  setCurrentRole('AWARENESS');
-                }}
-                className="px-3.5 py-1.5 bg-[#14283D] hover:bg-[#162B40] text-[#38D9C5] border border-[#243A50] hover:border-[#19C3B1] rounded-xl font-black text-xs flex items-center gap-1.5 cursor-pointer shadow-xs transition-all"
-              >
-                <span>← Back to Landing Page</span>
-              </button>
-              <div className="h-4 w-[1px] bg-[#243A50] hidden sm:block" />
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#19C3B1] animate-pulse" />
-                <span className="text-xs font-black text-[#F4F8FC] uppercase tracking-wide">
-                  {currentRole === 'PATIENT'
-                    ? 'Patient Senior Tablet Workspace'
-                    : currentRole === 'CAREGIVER'
-                    ? 'Caregiver Remote Monitoring Workspace'
-                    : currentRole === 'HEALTHCARE_WORKER'
-                    ? 'Clinician Telemetry & Analytics Dome'
-                    : 'Admin Management & Architecture'}
-                </span>
-              </div>
-            </div>
+          {/* Public Marketing Landing Body (Hero, Trust Bar, 3D Ecosystem, Features, Flow, Security, Footer) */}
+          <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
+            <MindCareCompletePlatform
+              onSelectRole={(role) => handleAuthenticate(role, patient.name)}
+              onOpenVoiceAssistant={() => setIsVoiceAssistantOpen(true)}
+              onOpenArchitecture={() => setIsArchitectureOpen(true)}
+              onOpenPrivacy={() => setIsPrivacyCenterOpen(true)}
+              onOpenAccessibility={() => setIsAccessibilityDrawerOpen(true)}
+              onOpenDemonstrationMode={() => setIsDemonstrationModeOpen(true)}
+              currentLang={currentLang}
+              onLanguageChange={setCurrentLang}
+              isOffline={isOffline}
+              onToggleOffline={handleToggleOffline}
+              is3DMode={is3DMode}
+              onToggle3DMode={() => setIs3DMode((prev) => !prev)}
+            />
+          </main>
+        </>
+      )}
 
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[11px] font-bold text-[#7F91A6] hidden md:inline">
-                Switch Portal:
-              </span>
-              <button
-                onClick={() => {
-                  sound.playClick();
-                  setCurrentRole('PATIENT');
-                }}
-                className={`px-3 py-1 rounded-xl text-xs font-black transition-all cursor-pointer ${
-                  currentRole === 'PATIENT'
-                    ? 'bg-[#19C3B1] text-[#07111F]'
-                    : 'bg-[#14283D] text-[#B7C5D6] hover:text-[#F4F8FC] border border-[#243A50]'
-                }`}
-              >
-                Senior Tablet
-              </button>
-              <button
-                onClick={() => {
-                  sound.playClick();
-                  setCurrentRole('CAREGIVER');
-                }}
-                className={`px-3 py-1 rounded-xl text-xs font-black transition-all cursor-pointer ${
-                  currentRole === 'CAREGIVER'
-                    ? 'bg-[#5BA7FF] text-[#07111F]'
-                    : 'bg-[#14283D] text-[#B7C5D6] hover:text-[#F4F8FC] border border-[#243A50]'
-                }`}
-              >
-                Caregiver
-              </button>
-              <button
-                onClick={() => {
-                  sound.playClick();
-                  setCurrentRole('HEALTHCARE_WORKER');
-                }}
-                className={`px-3 py-1 rounded-xl text-xs font-black transition-all cursor-pointer ${
-                  currentRole === 'HEALTHCARE_WORKER'
-                    ? 'bg-[#8B7CFF] text-[#07111F]'
-                    : 'bg-[#14283D] text-[#B7C5D6] hover:text-[#F4F8FC] border border-[#243A50]'
-                }`}
-              >
-                Clinician
-              </button>
-              <button
-                onClick={() => {
-                  sound.playClick();
-                  setCurrentRole('ADMIN');
-                }}
-                className={`px-3 py-1 rounded-xl text-xs font-black transition-all cursor-pointer ${
-                  currentRole === 'ADMIN'
-                    ? 'bg-[#F4B740] text-[#07111F]'
-                    : 'bg-[#14283D] text-[#B7C5D6] hover:text-[#F4F8FC] border border-[#243A50]'
-                }`}
-              >
-                Admin
-              </button>
-            </div>
-          </div>
-        )}
+      {/* =========================================================================
+          EXPERIENCE 02: AUTHENTICATED APPLICATION / DASHBOARD
+          ========================================================================= */}
+      {experience === 'AUTHENTICATED_APP' && (
+        <DashboardLayout
+          currentRole={currentRole}
+          onRoleChange={(role) => setCurrentRole(role)}
+          userName={userName}
+          patient={patient}
+          currentLang={currentLang}
+          onLanguageChange={setCurrentLang}
+          onOpenVoiceAssistant={() => setIsVoiceAssistantOpen(true)}
+          onOpenAccessibility={() => setIsAccessibilityDrawerOpen(true)}
+          onLogout={handleLogout}
+          isOffline={isOffline}
+        />
+      )}
 
-        {/* PATIENT ROLE EXPERIENCE */}
-        {currentRole === 'PATIENT' && (
-          <div className="space-y-6">
-            {/* Sub-Navigation Tabs for Patient */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-[#243A50]">
-              <button
-                id="patient-nav-home"
-                onClick={() => {
-                  sound.playClick();
-                  setPatientView('dashboard');
-                }}
-                className={`px-4 py-2 rounded-2xl font-extrabold text-sm transition-all whitespace-nowrap cursor-pointer ${
-                  patientView === 'dashboard'
-                    ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
-                    : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC] border border-[#243A50]'
-                }`}
-              >
-                🏠 Home Hub
-              </button>
-
-              <button
-                id="patient-nav-games"
-                onClick={() => {
-                  sound.playClick();
-                  setPatientView('games');
-                }}
-                className={`px-4 py-2 rounded-2xl font-extrabold text-sm transition-all whitespace-nowrap cursor-pointer ${
-                  patientView === 'games'
-                    ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
-                    : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC] border border-[#243A50]'
-                }`}
-              >
-                🧩 Cognitive Games & Sounds
-              </button>
-
-              <button
-                id="patient-nav-reminders"
-                onClick={() => {
-                  sound.playClick();
-                  setPatientView('reminders');
-                }}
-                className={`px-4 py-2 rounded-2xl font-extrabold text-sm transition-all whitespace-nowrap cursor-pointer ${
-                  patientView === 'reminders'
-                    ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
-                    : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC] border border-[#243A50]'
-                }`}
-              >
-                💊 Daily Schedule & Meds
-              </button>
-
-              <button
-                id="patient-nav-family"
-                onClick={() => {
-                  sound.playClick();
-                  setPatientView('family');
-                }}
-                className={`px-4 py-2 rounded-2xl font-extrabold text-sm transition-all whitespace-nowrap cursor-pointer ${
-                  patientView === 'family'
-                    ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
-                    : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC] border border-[#243A50]'
-                }`}
-              >
-                ❤️ Family Connect
-              </button>
-
-              <button
-                id="patient-nav-music"
-                onClick={() => {
-                  sound.playClick();
-                  setPatientView('music');
-                }}
-                className={`px-4 py-2 rounded-2xl font-extrabold text-sm transition-all whitespace-nowrap cursor-pointer ${
-                  patientView === 'music'
-                    ? 'bg-[#19C3B1] text-[#07111F] shadow-xs'
-                    : 'bg-[#101F31] text-[#B7C5D6] hover:bg-[#14283D] hover:text-[#F4F8FC] border border-[#243A50]'
-                }`}
-              >
-                🌊 Peaceful Music & River
-              </button>
-            </div>
-
-            {/* Patient Views Switcher */}
-            {patientView === 'dashboard' && (
-              <PatientDashboard
-                patient={patient}
-                currentLang={currentLang}
-                onOpenGames={() => setPatientView('games')}
-                onOpenReminders={() => setPatientView('reminders')}
-                onOpenFamily={() => setPatientView('family')}
-                onOpenMusic={() => setPatientView('music')}
-                onOpenVoiceAssistant={() => setIsVoiceAssistantOpen(true)}
-                onSelectGame={handleSelectGame}
-              />
-            )}
-
-            {patientView === 'games' && (
-              <GameContainer
-                currentLang={currentLang}
-                patient={patient}
-                initialGameId={selectedGameId || undefined}
-                onBackToDashboard={() => setPatientView('dashboard')}
-              />
-            )}
-
-            {patientView === 'reminders' && (
-              <RemindersView currentLang={currentLang} />
-            )}
-
-            {patientView === 'family' && (
-              <FamilyConnect currentLang={currentLang} />
-            )}
-
-            {patientView === 'music' && (
-              <MusicTherapy currentLang={currentLang} />
-            )}
-          </div>
-        )}
-
-        {/* CAREGIVER ROLE EXPERIENCE */}
-        {currentRole === 'CAREGIVER' && (
-          <CaregiverDashboard
-            patient={patient}
-            currentLang={currentLang}
-            onOpenReminders={() => {
-              setCurrentRole('PATIENT');
-              setPatientView('reminders');
-            }}
-            onOpenGames={() => {
-              setCurrentRole('PATIENT');
-              setPatientView('games');
-            }}
-          />
-        )}
-
-        {/* CLINICIAN / DOCTOR ROLE EXPERIENCE */}
-        {currentRole === 'HEALTHCARE_WORKER' && (
-          <DoctorDashboard
-            currentPatient={patient}
-            onSelectPatient={(pId) => {
-              fetch(`/api/patients/${pId}`)
-                .then((r) => r.json())
-                .then((res) => {
-                  if (res.data) setPatient(res.data);
-                })
-                .catch(() => {});
-            }}
-            currentLang={currentLang}
-          />
-        )}
-
-        {/* ADMIN ROLE EXPERIENCE */}
-        {currentRole === 'ADMIN' && (
-          <AdminConsole onOpenArchitecture={() => setIsArchitectureOpen(true)} />
-        )}
-      </main>
+      {/* Authentication Modal Flow */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onAuthenticate={handleAuthenticate}
+        initialMode={authInitialMode}
+      />
 
       {/* Floating Voice Assistant Modal */}
       <VoiceAssistantModal
@@ -487,12 +285,11 @@ export default function App() {
         onClose={() => setIsVoiceAssistantOpen(false)}
         patient={patient}
         currentLang={currentLang}
-        onLanguageChange={(lang) => {
-          setCurrentLang(lang);
-        }}
+        onLanguageChange={(lang) => setCurrentLang(lang)}
         onPlayGame={() => {
           setIsVoiceAssistantOpen(false);
-          setPatientView('games');
+          setExperience('AUTHENTICATED_APP');
+          setCurrentRole('PATIENT');
         }}
         onLoggedWater={() => {}}
         onCallCaregiver={() => {
@@ -506,7 +303,7 @@ export default function App() {
         onClose={() => setIsArchitectureOpen(false)}
       />
 
-      {/* Accessibility Drawer */}
+      {/* Accessibility Settings Drawer */}
       <AccessibilityDrawer
         isOpen={isAccessibilityDrawerOpen}
         currentMode={accessibilityMode}
@@ -520,7 +317,7 @@ export default function App() {
         onClose={() => setIsPrivacyCenterOpen(false)}
       />
 
-      {/* Demonstration Sandbox Modal */}
+      {/* Demonstration Simulation Sandbox Modal */}
       <DemonstrationModeModal
         isOpen={isDemonstrationModeOpen}
         onClose={() => setIsDemonstrationModeOpen(false)}

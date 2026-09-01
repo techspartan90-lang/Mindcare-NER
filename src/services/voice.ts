@@ -210,6 +210,10 @@ class VoiceService {
       replyText: 'I am here with you, Dhiren-da. Remember you can play a game, check your medicines, or call Priyanka anytime.',
     };
   }
+
+  public matchIntentOffline(transcript: string, lang: SupportedLanguage): VoiceCommandResult {
+    return this.parseLocalIntent(transcript, lang);
+  }
 }
 
 export const voice = new VoiceService();

@@ -20,7 +20,7 @@ export function useProductScroll(containerRef: React.RefObject<HTMLElement | nul
   const targetProgressRef = useRef(0);
   const currentSmoothRef = useRef(0);
   const rafIdRef = useRef<number | null>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Smooth progress loop using Lerp
   useEffect(() => {

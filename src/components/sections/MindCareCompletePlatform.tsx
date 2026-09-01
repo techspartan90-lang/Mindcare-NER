@@ -394,38 +394,42 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-hero"
-        className="relative bg-gradient-to-b from-[#101F31] via-[#0B1726] to-[#07111F] rounded-3xl border border-[#243A50] p-6 sm:p-10 lg:p-12 overflow-hidden shadow-2xl"
+        className="relative bg-gradient-to-b from-[#101F31] via-[#0B1726] to-[#07111F] rounded-3xl border border-[#243A50] p-6 sm:p-10 lg:p-12 overflow-hidden shadow-2xl scroll-mt-24"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        {/* Calming medical ambient orbs */}
+        <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#19C3B1]/15 blur-3xl animate-drift" />
+        <div className="absolute bottom-0 -left-24 w-72 h-72 rounded-full bg-[#5BA7FF]/10 blur-3xl animate-drift" style={{ animationDelay: '-6s' }} />
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative">
           {/* Left Content Column */}
           <div className="lg:col-span-7 space-y-6 text-left z-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#14283D] border border-[#243A50] text-[#38D9C5] text-xs font-black tracking-wide uppercase shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#38D9C5]" />
-              <span>AI-Enabled Cognitive Assistance • North East India</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#14283D] border border-[#243A50] text-[#38D9C5] text-sm font-black tracking-wide uppercase shadow-2xs">
+              <Sparkles className="w-4 h-4 text-[#38D9C5]" />
+              <span>AI-Enabled Cognitive Healthcare • North East India</span>
             </div>
 
             <div className="space-y-3">
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#F4F8FC] tracking-tight leading-tight">
-                Personalized Cognitive Care,{' '}
-                <span className="text-[#38D9C5]">Designed for North East India.</span>
+                Warm, Personalized{' '}
+                <span className="text-gradient-calm">Cognitive Care</span>,{' '}
+                Designed for North East India.
               </h1>
               <p className="text-lg sm:text-2xl font-bold text-[#5BA7FF] tracking-tight">
-                Remember. Engage. Connect.
+                Remember. Engage. Connect. 💙
               </p>
             </div>
 
             <p className="text-base sm:text-lg text-[#B7C5D6] leading-relaxed max-w-2xl font-normal">
-              A clinically guided, culturally rooted cognitive assistance and longitudinal
-              monitoring platform. Purpose-built for elderly seniors experiencing mild cognitive
-              impairment (MCI) or memory loss across Assam, Meghalaya, Manipur, Mizoram, Nagaland,
-              Tripura, Arunachal Pradesh, and Sikkim.
+              A reassuring, clinically guided platform that supports memory, daily routines, and
+              family connection — built with love and dignity for elderly seniors across Assam,
+              Meghalaya, Manipur, Mizoram, Nagaland, Tripura, Arunachal Pradesh, and Sikkim.
             </p>
 
-            {/* Primary Action CTAs */}
+            {/* Primary Action CTAs — generous touch targets */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 onClick={() => scrollToSection('section-3d-hub')}
-                className="px-6 py-3.5 rounded-2xl bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F] font-black text-sm sm:text-base shadow-lg transition-all flex items-center gap-2 cursor-pointer active:scale-95"
+                className="btn-senior bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F] shadow-lg animate-medical-pulse cursor-pointer"
               >
                 <Sparkles className="w-5 h-5" />
                 <span>Explore MindCare 3D</span>
@@ -436,7 +440,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
                   sound.playClick();
                   onSelectRole('PATIENT');
                 }}
-                className="px-6 py-3.5 rounded-2xl bg-[#14283D] hover:bg-[#162B40] text-[#F4F8FC] font-black text-sm sm:text-base border border-[#243A50] shadow-xs transition-all flex items-center gap-2 cursor-pointer active:scale-95"
+                className="btn-senior bg-[#14283D] hover:bg-[#162B40] text-[#F4F8FC] border border-[#243A50] shadow-xs cursor-pointer"
               >
                 <Brain className="w-5 h-5 text-[#38D9C5]" />
                 <span>Launch Senior Tablet Demo</span>
@@ -444,7 +448,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
 
               <button
                 onClick={() => scrollToSection('section-how-it-works')}
-                className="px-4 py-3.5 text-xs sm:text-sm font-black text-[#B7C5D6] hover:text-[#F4F8FC] flex items-center gap-1 cursor-pointer"
+                className="px-4 py-3.5 text-sm sm:text-base font-black text-[#B7C5D6] hover:text-[#F4F8FC] flex items-center gap-1 cursor-pointer"
               >
                 <span>How It Works</span>
                 <ChevronRight className="w-4 h-4" />
@@ -471,14 +475,14 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           {/* Right Visual Column with Circular / Arch Masked Mockup */}
           <div className="lg:col-span-5 relative flex justify-center items-center">
             {/* Ambient Background Blur Orb */}
-            <div className="absolute w-72 h-72 rounded-full bg-[#19C3B1]/20 blur-3xl -z-10" />
+            <div className="absolute w-72 h-72 rounded-full bg-[#19C3B1]/20 blur-3xl -z-10 animate-calm-float" />
 
             {/* Senior Arch Masked Interactive Showcase */}
-            <div className="relative w-full max-w-[380px] bg-[#101F31] rounded-3xl border border-[#243A50] p-5 shadow-2xl space-y-4">
+            <div className="relative w-full max-w-[400px] medical-card p-5 shadow-2xl space-y-4 animate-calm-float" style={{ animationDuration: '9s' }}>
               {/* Top Tablet Camera & Speaker Notch */}
               <div className="flex items-center justify-between pb-2 border-b border-[#243A50]">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#19C3B1]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#19C3B1] animate-pulse" />
                   <span className="text-[11px] font-black uppercase text-[#F4F8FC]">
                     MindCare Senior Tablet
                   </span>
@@ -490,12 +494,12 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
 
               {/* Arch Masked Senior Image Representation */}
               <div className="relative rounded-2xl overflow-hidden bg-[#14283D] border border-[#243A50] p-4 text-center space-y-3">
-                <div className="w-20 h-20 mx-auto rounded-full bg-[#19C3B1] text-[#07111F] flex items-center justify-center shadow-lg">
+                <div className="w-20 h-20 mx-auto rounded-full bg-[#19C3B1] text-[#07111F] flex items-center justify-center shadow-lg animate-medical-pulse">
                   <Heart className="w-10 h-10 text-[#07111F] fill-[#07111F]" />
                 </div>
                 <div className="space-y-1">
                   <h3 className="font-black text-[#F4F8FC] text-base">
-                    Welcome back, Dhiren
+                    Welcome back, Dhiren 💛
                   </h3>
                   <p className="text-xs text-[#38D9C5] font-bold">
                     "{REGIONAL_PHRASES[currentLang]?.sample || 'Good morning, Dhiren. It is time for your warm tea and morning memory blossom.'}"
@@ -508,9 +512,9 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
                     sound.playClick();
                     onSelectRole('PATIENT');
                   }}
-                  className="w-full py-2.5 bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F] rounded-xl font-black text-xs shadow-xs flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
+                  className="w-full py-3 bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F] rounded-xl font-black text-sm shadow-xs flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
                 >
-                  <Play className="w-3.5 h-3.5 fill-[#07111F]" />
+                  <Play className="w-4 h-4 fill-[#07111F]" />
                   <span>Start Morning Memory Bloom</span>
                 </button>
               </div>
@@ -540,7 +544,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-problem"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#F4B740] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -661,7 +665,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-features"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#38D9C5] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -781,7 +785,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-ai-intelligence"
-        className="bg-gradient-to-br from-[#101F31] via-[#0B1726] to-[#07111F] text-[#F4F8FC] rounded-3xl border border-[#243A50] p-6 sm:p-10 lg:p-12 shadow-2xl space-y-8"
+        className="bg-gradient-to-br from-[#101F31] via-[#0B1726] to-[#07111F] text-[#F4F8FC] rounded-3xl border border-[#243A50] p-6 sm:p-10 lg:p-12 shadow-2xl space-y-8 scroll-mt-24"
       >
         <div className="max-w-3xl space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#38D9C5] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -848,8 +852,10 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-cognitive-activities"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC]"
+        className="relative bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC] scroll-mt-24"
       >
+        <div id="section-patient" className="absolute -top-24 left-0" />
+        <div id="section-roles" className="absolute -top-24 left-0" />
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#5BA7FF] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
             Interactive Activities Suite
@@ -1029,7 +1035,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-voice-language"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#38D9C5] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -1112,7 +1118,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-cultural-map"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#F4B740] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -1202,7 +1208,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-daily-routine"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#35D07F] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -1289,8 +1295,9 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-caregiver"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC]"
+        className="relative bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC] scroll-mt-24"
       >
+        <div id="section-family-connect" className="absolute -top-24 left-0" />
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Left Text */}
           <div className="lg:col-span-6 space-y-4 text-left">
@@ -1389,8 +1396,9 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-clinician"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC]"
+        className="relative bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC] scroll-mt-24"
       >
+        <div id="section-analytics-dome" className="absolute -top-24 left-0" />
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[#243A50] pb-5">
           <div>
             <span className="text-xs font-black uppercase tracking-wider text-[#8B7CFF] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -1512,7 +1520,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-memory-garden"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-pink-400 bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -1567,7 +1575,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-offline-mode"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-6 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-6 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#35D07F] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -1623,7 +1631,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-security"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-6 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-6 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#5BA7FF] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -1677,7 +1685,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-accessibility"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-6 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-6 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[#243A50] pb-4">
           <div>
@@ -1736,7 +1744,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-how-it-works"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#38D9C5] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -1797,7 +1805,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-pricing"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#38D9C5] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -1886,7 +1894,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-faq"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-6 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-6 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#38D9C5] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
@@ -1956,7 +1964,7 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           ========================================================================= */}
       <section
         id="section-contact"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-6 text-[#F4F8FC]"
+        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-6 text-[#F4F8FC] scroll-mt-24"
       >
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <span className="text-xs font-black uppercase tracking-wider text-[#38D9C5] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
