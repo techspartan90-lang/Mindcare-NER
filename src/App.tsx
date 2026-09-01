@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { PublicMarketingHeader } from './components/navigation/PublicMarketingHeader';
-import { DashboardLayout } from './components/dashboard/DashboardLayout';
 import { AuthModal, AuthMode } from './components/auth/AuthModal';
 import { VoiceAssistantModal } from './components/patient/VoiceAssistantModal';
 import { ArchitectureModal } from './components/admin/ArchitectureModal';
 import { AccessibilityDrawer } from './components/common/AccessibilityDrawer';
 import { PrivacyCenterModal } from './components/common/PrivacyCenterModal';
 import { DemonstrationModeModal } from './components/common/DemonstrationModeModal';
-import { MindCareCompletePlatform } from './components/sections/MindCareCompletePlatform';
 import {
   PatientProfile,
   SupportedLanguage,
@@ -20,6 +18,30 @@ import { voice } from './services/voice';
 import { offlineSync } from './services/offlineSync';
 
 export type ExperienceMode = 'PUBLIC_MARKETING' | 'AUTHENTICATED_APP';
+
+const DashboardLayout = lazy(() =>
+  import('./components/dashboard/DashboardLayout').then((m) => ({
+    default: m.DashboardLayout,
+  })),
+);
+
+const MindCareCompletePlatform = lazy(() =>
+  import('./components/sections/MindCareCompletePlatform').then((m) => ({
+    default: m.MindCareCompletePlatform,
+  })),
+);
+
+function ExperienceFallback() {
+  return (
+    <div
+      className="flex min-h-[60vh] items-center justify-center"
+      aria-busy="true"
+      aria-label="Loading experience"
+    >
+      <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#19C3B1] border-t-transparent" />
+    </div>
+  );
+}
 
 export default function App() {
   // Experience State: Experience 01 (Marketing) vs Experience 02 (Authenticated Dashboard)
@@ -235,20 +257,22 @@ export default function App() {
 
           {/* Public Marketing Landing Body (Hero, Trust Bar, 3D Ecosystem, Features, Flow, Security, Footer) */}
           <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
-            <MindCareCompletePlatform
-              onSelectRole={(role) => handleAuthenticate(role, patient.name)}
-              onOpenVoiceAssistant={() => setIsVoiceAssistantOpen(true)}
-              onOpenArchitecture={() => setIsArchitectureOpen(true)}
-              onOpenPrivacy={() => setIsPrivacyCenterOpen(true)}
-              onOpenAccessibility={() => setIsAccessibilityDrawerOpen(true)}
-              onOpenDemonstrationMode={() => setIsDemonstrationModeOpen(true)}
-              currentLang={currentLang}
-              onLanguageChange={setCurrentLang}
-              isOffline={isOffline}
-              onToggleOffline={handleToggleOffline}
-              is3DMode={is3DMode}
-              onToggle3DMode={() => setIs3DMode((prev) => !prev)}
-            />
+            <Suspense fallback={<ExperienceFallback />}>
+              <MindCareCompletePlatform
+                onSelectRole={(role) => handleAuthenticate(role, patient.name)}
+                onOpenVoiceAssistant={() => setIsVoiceAssistantOpen(true)}
+                onOpenArchitecture={() => setIsArchitectureOpen(true)}
+                onOpenPrivacy={() => setIsPrivacyCenterOpen(true)}
+                onOpenAccessibility={() => setIsAccessibilityDrawerOpen(true)}
+                onOpenDemonstrationMode={() => setIsDemonstrationModeOpen(true)}
+                currentLang={currentLang}
+                onLanguageChange={setCurrentLang}
+                isOffline={isOffline}
+                onToggleOffline={handleToggleOffline}
+                is3DMode={is3DMode}
+                onToggle3DMode={() => setIs3DMode((prev) => !prev)}
+              />
+            </Suspense>
           </main>
         </>
       )}
@@ -257,18 +281,20 @@ export default function App() {
           EXPERIENCE 02: AUTHENTICATED APPLICATION / DASHBOARD
           ========================================================================= */}
       {experience === 'AUTHENTICATED_APP' && (
-        <DashboardLayout
-          currentRole={currentRole}
-          onRoleChange={(role) => setCurrentRole(role)}
-          userName={userName}
-          patient={patient}
-          currentLang={currentLang}
-          onLanguageChange={setCurrentLang}
-          onOpenVoiceAssistant={() => setIsVoiceAssistantOpen(true)}
-          onOpenAccessibility={() => setIsAccessibilityDrawerOpen(true)}
-          onLogout={handleLogout}
-          isOffline={isOffline}
-        />
+        <Suspense fallback={<ExperienceFallback />}>
+          <DashboardLayout
+            currentRole={currentRole}
+            onRoleChange={(role) => setCurrentRole(role)}
+            userName={userName}
+            patient={patient}
+            currentLang={currentLang}
+            onLanguageChange={setCurrentLang}
+            onOpenVoiceAssistant={() => setIsVoiceAssistantOpen(true)}
+            onOpenAccessibility={() => setIsAccessibilityDrawerOpen(true)}
+            onLogout={handleLogout}
+            isOffline={isOffline}
+          />
+        </Suspense>
       )}
 
       {/* Authentication Modal Flow */}
