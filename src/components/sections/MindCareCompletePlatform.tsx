@@ -40,6 +40,8 @@ import {
 } from 'lucide-react';
 import { MindCare3DHub, PavilionZone } from '../canvas/MindCare3DHub';
 import { MindCare3DScene } from '../3d/MindCare3DScene';
+import { HowMindCareWorks3D } from './HowMindCareWorks3D';
+import { ConnectedPlatformArchitecture3D } from './ConnectedPlatformArchitecture3D';
 import { PerformanceMode } from '../3d/types';
 import { PixelSwap } from '../ui/PixelSwap';
 import { SupportedLanguage, UserRole } from '../../types';
@@ -644,211 +646,36 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
           SECTION 3: 3D CENTRAL NEXUS & SPATIAL ECOSYSTEM (OR 2D FALLBACK)
           ========================================================================= */}
       <section id="section-3d-hub" className="scroll-mt-24">
-        <MindCare3DScene
+        <MindCare3DHub
           onNavigateSection={scrollToSection}
           onSelectZone={(zone) => {
             scrollToSection(zone.targetSectionId);
           }}
-          performanceMode={is3DMode ? 'FULL_3D' : '2D_MODE'}
-          onTogglePerformanceMode={(mode) => {
-            if (mode === '2D_MODE' && is3DMode) {
-              onToggle3DMode();
-            } else if (mode !== '2D_MODE' && !is3DMode) {
-              onToggle3DMode();
-            }
-          }}
+          isInteractive3D={is3DMode}
         />
       </section>
 
       {/* =========================================================================
-          SECTION 4: CORE FEATURES (6 INTERACTIVE PILLARS)
+          SECTION 4: 3D FIVE-STEP HEALTHCARE ONBOARDING JOURNEY
           ========================================================================= */}
-      <section
-        id="section-features"
-        className="bg-[#101F31] rounded-3xl border border-[#243A50] p-6 sm:p-10 shadow-2xl space-y-8 text-[#F4F8FC] scroll-mt-24"
-      >
-        <div className="text-center max-w-3xl mx-auto space-y-2">
-          <span className="text-xs font-black uppercase tracking-wider text-[#38D9C5] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
-            Connected Platform Architecture
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-[#F4F8FC] tracking-tight">
-            Six Pillars of Everyday Cognitive Support
-          </h2>
-          <p className="text-sm sm:text-base text-[#B7C5D6]">
-            Engineered with senior tactile affordance, zero-frustration algorithms, and complete
-            family integration.
-          </p>
-        </div>
-
-        {/* 6 Core Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {/* Feature 1 */}
-          <div className="p-6 rounded-2xl bg-[#14283D] border border-[#243A50] hover:border-[#19C3B1] hover:shadow-xl transition-all space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#101F31] text-[#38D9C5] border border-[#243A50] flex items-center justify-center shadow-2xs">
-              <Gamepad2 className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-black text-[#F4F8FC]">Adaptive Cognitive Games</h3>
-            <p className="text-xs text-[#B7C5D6] leading-relaxed">
-              Culturally anchored exercises spanning short-term memory, attention endurance, pattern
-              recognition, and familiar regional sound identification.
-            </p>
-            <div className="pt-2 flex items-center justify-between text-xs font-bold text-[#38D9C5]">
-              <span>6 Calibrated Domains</span>
-              <ChevronRight className="w-4 h-4" />
-            </div>
-          </div>
-
-          {/* Feature 2 */}
-          <div className="p-6 rounded-2xl bg-[#14283D] border border-[#243A50] hover:border-[#38D9C5] hover:shadow-xl transition-all space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#101F31] text-[#38D9C5] border border-[#243A50] flex items-center justify-center shadow-2xs">
-              <Sparkles className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-black text-[#F4F8FC]">AI Personalization Engine</h3>
-            <p className="text-xs text-[#B7C5D6] leading-relaxed">
-              Dynamic difficulty adjustment (DDA) eliminates frustration by matching real-time senior
-              fatigue, while detecting early circadian sundowning patterns.
-            </p>
-            <div className="pt-2 flex items-center justify-between text-xs font-bold text-[#38D9C5]">
-              <span>Zero-Frustration DDA</span>
-              <ChevronRight className="w-4 h-4" />
-            </div>
-          </div>
-
-          {/* Feature 3 */}
-          <div className="p-6 rounded-2xl bg-[#14283D] border border-[#243A50] hover:border-[#5BA7FF] hover:shadow-xl transition-all space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#101F31] text-[#5BA7FF] border border-[#243A50] flex items-center justify-center shadow-2xs">
-              <Volume2 className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-black text-[#F4F8FC]">Voice & Multilingual AI</h3>
-            <p className="text-xs text-[#B7C5D6] leading-relaxed">
-              Native speech recognition and warm audio playback across Assamese, Bengali, Meiteilon,
-              Mizo, Khasi, Hindi, and English.
-            </p>
-            <div className="pt-2 flex items-center justify-between text-xs font-bold text-[#5BA7FF]">
-              <span>7 Regional Cadences</span>
-              <ChevronRight className="w-4 h-4" />
-            </div>
-          </div>
-
-          {/* Feature 4 */}
-          <div className="p-6 rounded-2xl bg-[#14283D] border border-[#243A50] hover:border-[#F4B740] hover:shadow-xl transition-all space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#101F31] text-[#F4B740] border border-[#243A50] flex items-center justify-center shadow-2xs">
-              <Clock className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-black text-[#F4F8FC]">Daily Routine Pacing</h3>
-            <p className="text-xs text-[#B7C5D6] leading-relaxed">
-              Visual and family-recorded audio reminders for morning blood pressure medication,
-              hydration milestones, meals, and gentle exercise.
-            </p>
-            <div className="pt-2 flex items-center justify-between text-xs font-bold text-[#F4B740]">
-              <span>Circadian Pacing</span>
-              <ChevronRight className="w-4 h-4" />
-            </div>
-          </div>
-
-          {/* Feature 5 */}
-          <div className="p-6 rounded-2xl bg-[#14283D] border border-[#243A50] hover:border-[#35D07F] hover:shadow-xl transition-all space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#101F31] text-[#35D07F] border border-[#243A50] flex items-center justify-center shadow-2xs">
-              <HeartHandshake className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-black text-[#F4F8FC]">Caregiver Portal & Alerts</h3>
-            <p className="text-xs text-[#B7C5D6] leading-relaxed">
-              Remote daughter and son dashboard providing peace-of-mind telemetry, missed medication
-              alerts, mood summaries, and one-tap voice messaging.
-            </p>
-            <div className="pt-2 flex items-center justify-between text-xs font-bold text-[#35D07F]">
-              <span>Remote Peace of Mind</span>
-              <ChevronRight className="w-4 h-4" />
-            </div>
-          </div>
-
-          {/* Feature 6 */}
-          <div className="p-6 rounded-2xl bg-[#14283D] border border-[#243A50] hover:border-[#8B7CFF] hover:shadow-xl transition-all space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#101F31] text-[#8B7CFF] border border-[#243A50] flex items-center justify-center shadow-2xs">
-              <WifiOff className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-black text-[#F4F8FC]">100% Offline Edge Sync</h3>
-            <p className="text-xs text-[#B7C5D6] leading-relaxed">
-              Autonomous on-device engine guaranteeing full functionality in isolated valley homes
-              during heavy storms, silently auto-syncing when restored.
-            </p>
-            <div className="pt-2 flex items-center justify-between text-xs font-bold text-[#8B7CFF]">
-              <span>Monsoon Proof</span>
-              <ChevronRight className="w-4 h-4" />
-            </div>
-          </div>
-        </div>
-      </section>
+      <HowMindCareWorks3D
+        onSelectRole={onSelectRole}
+        onOpenVoiceAssistant={onOpenVoiceAssistant}
+        currentLang={currentLang}
+      />
 
       {/* =========================================================================
-          SECTION 5: AI INTELLIGENCE LAB (FLOW + DDA)
+          SECTION 4: CONNECTED PLATFORM ARCHITECTURE (3D SIX PILLARS ECOSYSTEM)
           ========================================================================= */}
-      <section
-        id="section-ai-intelligence"
-        className="bg-gradient-to-br from-[#101F31] via-[#0B1726] to-[#07111F] text-[#F4F8FC] rounded-3xl border border-[#243A50] p-6 sm:p-10 lg:p-12 shadow-2xl space-y-8 scroll-mt-24"
-      >
-        <div className="max-w-3xl space-y-2">
-          <span className="text-xs font-black uppercase tracking-wider text-[#38D9C5] bg-[#14283D] px-3 py-1 rounded-full border border-[#243A50]">
-            Responsible On-Device AI
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-[#F4F8FC] tracking-tight">
-            Technology That Understands You.
-          </h2>
-          <p className="text-sm sm:text-base text-[#B7C5D6]">
-            How MindCare's ethical machine learning adapts dynamically to senior cognitive rhythms
-            without causing frustration.
-          </p>
-        </div>
-
-        {/* 6-Step AI Architecture Flow */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          {[
-            { step: '01', title: 'User Input', desc: 'Touch, voice prompt, or sound match attempt.' },
-            { step: '02', title: 'Activity Interaction', desc: 'Real-time response latency & accuracy tracked.' },
-            { step: '03', title: 'Edge Analytics', desc: 'On-device neural inference evaluates cognitive load.' },
-            { step: '04', title: 'Adaptive DDA', desc: 'Adjusts grid size, hints, and time limits dynamically.' },
-            { step: '05', title: 'Sundowning Guard', desc: 'Eases pacing if evening fatigue or restlessness occurs.' },
-            { step: '06', title: 'Longitudinal View', desc: 'Anonymized trajectory trends logged for GMCH clinician.' },
-          ].map((node) => (
-            <div
-              key={node.step}
-              className="p-4 rounded-2xl bg-[#14283D] border border-[#243A50] space-y-1.5"
-            >
-              <span className="text-xs font-black text-[#38D9C5]">{node.step}</span>
-              <h4 className="font-black text-sm text-[#F4F8FC]">{node.title}</h4>
-              <p className="text-[11px] text-[#B7C5D6] leading-snug">{node.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Medically Responsible AI Guardrails */}
-        <div className="p-5 rounded-2xl bg-[#14283D] border border-[#243A50] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <Shield className="w-8 h-8 text-[#38D9C5] shrink-0" />
-            <div>
-              <h4 className="font-black text-sm text-[#F4F8FC]">
-                Strict Ethical & Medically Responsible AI Protocol
-              </h4>
-              <p className="text-xs text-[#B7C5D6]">
-                MindCare NER does not generate synthetic medical diagnoses. All algorithms focus on
-                cognitive engagement pacing, senior dignity, and longitudinal baseline stability.
-              </p>
-            </div>
-          </div>
-          <button
-            onClick={() => {
-              sound.playClick();
-              onOpenArchitecture();
-            }}
-            className="px-4 py-2 bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F] font-black text-xs rounded-xl whitespace-nowrap cursor-pointer transition-all active:scale-95"
-          >
-            Inspect AI Architecture
-          </button>
-        </div>
-      </section>
+      <ConnectedPlatformArchitecture3D
+        onSelectRole={onSelectRole}
+        onOpenVoiceAssistant={onOpenVoiceAssistant}
+        onNavigateSection={scrollToSection}
+        currentLang={currentLang}
+      />
 
       {/* =========================================================================
-          SECTION 6: COGNITIVE ACTIVITIES & PLAYABLE MINI-DEMO
+          SECTION 5: COGNITIVE ACTIVITIES & PLAYABLE MINI-DEMO
           ========================================================================= */}
       <section
         id="section-cognitive-activities"
@@ -2124,13 +1951,16 @@ export const MindCareCompletePlatform: React.FC<MindCareCompletePlatformProps> =
                 onClick={() => scrollToSection('section-features')}
                 className="text-left hover:text-[#F4F8FC] cursor-pointer"
               >
-                6 Core Features
+                6 Connected Pillars
               </button>
               <button
-                onClick={() => scrollToSection('section-ai-intelligence')}
+                onClick={() => {
+                  sound.playClick();
+                  onOpenArchitecture();
+                }}
                 className="text-left hover:text-[#F4F8FC] cursor-pointer"
               >
-                AI Intelligence Lab
+                Inspect Architecture
               </button>
             </div>
           </div>

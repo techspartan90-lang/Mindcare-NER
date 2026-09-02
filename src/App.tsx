@@ -6,6 +6,7 @@ import { ArchitectureModal } from './components/admin/ArchitectureModal';
 import { AccessibilityDrawer } from './components/common/AccessibilityDrawer';
 import { PrivacyCenterModal } from './components/common/PrivacyCenterModal';
 import { DemonstrationModeModal } from './components/common/DemonstrationModeModal';
+import { MindCareVoiceAssistantWidget } from './components/voice/MindCareVoiceAssistantWidget';
 import {
   PatientProfile,
   SupportedLanguage,
@@ -348,6 +349,42 @@ export default function App() {
         isOpen={isDemonstrationModeOpen}
         onClose={() => setIsDemonstrationModeOpen(false)}
         onApplySimulation={handleApplyDemonstrationMode}
+      />
+
+      {/* Persistent Floating 3D Voice Assistant Widget */}
+      <MindCareVoiceAssistantWidget
+        currentLang={currentLang}
+        onLanguageChange={setCurrentLang}
+        onNavigateSection={handleNavigateMarketingSection}
+        onOpenGames={() => {
+          if (experience !== 'AUTHENTICATED_APP') {
+            handleAuthenticate('PATIENT', patient.name);
+          }
+        }}
+        onOpenRoutine={() => {
+          if (experience === 'AUTHENTICATED_APP') {
+            setCurrentRole('PATIENT');
+          } else {
+            handleNavigateMarketingSection('section-daily-routine');
+          }
+        }}
+        onOpenFamily={() => {
+          if (experience === 'AUTHENTICATED_APP') {
+            setCurrentRole('CAREGIVER');
+          } else {
+            handleNavigateMarketingSection('section-caregiver');
+          }
+        }}
+        onOpenSounds={() => {
+          handleNavigateMarketingSection('section-voice-language');
+        }}
+        onOpenProgress={() => {
+          if (experience === 'AUTHENTICATED_APP') {
+            setCurrentRole('HEALTHCARE_WORKER');
+          } else {
+            handleNavigateMarketingSection('section-clinician');
+          }
+        }}
       />
     </div>
   );

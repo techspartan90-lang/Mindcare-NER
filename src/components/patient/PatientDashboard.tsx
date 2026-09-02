@@ -239,93 +239,137 @@ export const PatientDashboard: React.FC<PatientDashboardProps> = ({
         <>
           {/* Main 4 Action Tiles Grid (Elderly-First High Contrast Touch Targets) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {/* Tile 1: Cognitive Games */}
-            <button
-              id="tile-play-games"
-              onClick={() => {
-                sound.playClick();
-                onOpenGames();
-              }}
-              className="bg-[#101F31] hover:bg-[#14283D] p-6 rounded-3xl border border-[#243A50] hover:border-[#19C3B1] shadow-xl text-left flex flex-col justify-between min-h-[200px] transition-all transform active:scale-98 group cursor-pointer"
+            {/* Tile 1: Brain Games */}
+            <div
+              id="card-brain-games"
+              className="bg-[#101F31] p-6 rounded-3xl border border-[#243A50] hover:border-[#19C3B1] shadow-xl text-left flex flex-col justify-between min-h-[240px] transition-all group"
             >
-              <div className="w-16 h-16 rounded-2xl bg-teal-950/80 text-[#38D9C5] group-hover:bg-[#19C3B1] group-hover:text-[#07111F] flex items-center justify-center text-4xl transition-colors shadow-xs border border-teal-800/60">
-                🌸
-              </div>
               <div>
-                <h3 className="text-2xl font-black text-[#F4F8FC] group-hover:text-[#38D9C5]">
-                  {t.gamesTitle}
+                <div className="flex items-center justify-between">
+                  <div className="w-16 h-16 rounded-2xl bg-teal-950/80 text-[#38D9C5] group-hover:bg-[#19C3B1] group-hover:text-[#07111F] flex items-center justify-center text-4xl transition-colors shadow-xs border border-teal-800/60">
+                    🧠
+                  </div>
+                  <span className="text-xs bg-teal-950 text-[#38D9C5] font-black px-2.5 py-1 rounded-full border border-teal-800">
+                    Today's Session
+                  </span>
+                </div>
+                <h3 className="text-2xl font-black text-[#F4F8FC] group-hover:text-[#38D9C5] mt-3">
+                  Brain Games
                 </h3>
                 <p className="text-sm font-semibold text-[#B7C5D6] mt-1">
-                  Cultural motifs, audio recognition & stories
+                  Personalized cognitive activities for today's session.
                 </p>
               </div>
-            </button>
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  onOpenGames();
+                }}
+                className="mt-4 w-full min-h-[48px] px-4 py-2.5 bg-[#19C3B1] hover:bg-[#38D9C5] text-[#07111F] font-black text-sm rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-md transition-transform active:scale-95"
+              >
+                <Play className="w-4 h-4 fill-current" />
+                <span>Start Activity</span>
+              </button>
+            </div>
 
-            {/* Tile 2: Daily Medicine & Routines */}
-            <button
-              id="tile-daily-reminders"
-              onClick={() => {
-                sound.playClick();
-                onOpenReminders();
-              }}
-              className="bg-[#101F31] hover:bg-[#14283D] p-6 rounded-3xl border border-[#243A50] hover:border-[#F4B740] shadow-xl text-left flex flex-col justify-between min-h-[200px] transition-all transform active:scale-98 group cursor-pointer"
+            {/* Tile 2: Daily Routine */}
+            <div
+              id="card-daily-routine"
+              className="bg-[#101F31] p-6 rounded-3xl border border-[#243A50] hover:border-[#F4B740] shadow-xl text-left flex flex-col justify-between min-h-[240px] transition-all group"
             >
-              <div className="w-16 h-16 rounded-2xl bg-amber-950/80 text-amber-300 group-hover:bg-[#F4B740] group-hover:text-[#07111F] flex items-center justify-center text-4xl transition-colors shadow-xs border border-amber-800/60">
-                💊
-              </div>
               <div>
-                <h3 className="text-2xl font-black text-[#F4F8FC] group-hover:text-[#F4B740]">
-                  {t.dailyRoutine}
+                <div className="flex items-center justify-between">
+                  <div className="w-16 h-16 rounded-2xl bg-amber-950/80 text-amber-300 group-hover:bg-[#F4B740] group-hover:text-[#07111F] flex items-center justify-center text-4xl transition-colors shadow-xs border border-amber-800/60">
+                    💊
+                  </div>
+                  <span className="text-xs bg-amber-950 text-amber-300 font-black px-2.5 py-1 rounded-full border border-amber-800">
+                    3/5 Done
+                  </span>
+                </div>
+                <h3 className="text-2xl font-black text-[#F4F8FC] group-hover:text-[#F4B740] mt-3">
+                  Daily Routine
                 </h3>
                 <p className="text-sm font-semibold text-[#B7C5D6] mt-1">
-                  Morning medicine taken • Next at 5:30 PM
+                  Next: Hydration & Afternoon Rest (01:00 PM)
                 </p>
               </div>
-            </button>
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  onOpenReminders();
+                }}
+                className="mt-4 w-full min-h-[48px] px-4 py-2.5 bg-[#F4B740] hover:bg-amber-300 text-amber-950 font-black text-sm rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-md transition-transform active:scale-95"
+              >
+                <Calendar className="w-4 h-4" />
+                <span>View Routine</span>
+              </button>
+            </div>
 
-            {/* Tile 3: Call Family */}
-            <button
-              id="tile-call-family"
-              onClick={() => {
-                sound.playClick();
-                onOpenFamily();
-              }}
-              className="bg-[#101F31] hover:bg-[#14283D] p-6 rounded-3xl border border-[#243A50] hover:border-[#ec4899] shadow-xl text-left flex flex-col justify-between min-h-[200px] transition-all transform active:scale-98 group cursor-pointer"
+            {/* Tile 3: Family & Photos */}
+            <div
+              id="card-family-photos"
+              className="bg-[#101F31] p-6 rounded-3xl border border-[#243A50] hover:border-[#ec4899] shadow-xl text-left flex flex-col justify-between min-h-[240px] transition-all group"
             >
-              <div className="w-16 h-16 rounded-2xl bg-pink-950/80 text-pink-300 group-hover:bg-[#ec4899] group-hover:text-[#07111F] flex items-center justify-center text-4xl transition-colors shadow-xs border border-pink-800/60">
-                ❤️
-              </div>
               <div>
-                <h3 className="text-2xl font-black text-[#F4F8FC] group-hover:text-pink-400">
-                  {t.familyTitle}
+                <div className="flex items-center justify-between">
+                  <div className="w-16 h-16 rounded-2xl bg-pink-950/80 text-pink-300 group-hover:bg-[#ec4899] group-hover:text-[#07111F] flex items-center justify-center text-4xl transition-colors shadow-xs border border-pink-800/60">
+                    ❤️
+                  </div>
+                  <span className="text-xs bg-pink-950 text-pink-300 font-black px-2.5 py-1 rounded-full border border-pink-800">
+                    2 New Notes
+                  </span>
+                </div>
+                <h3 className="text-2xl font-black text-[#F4F8FC] group-hover:text-pink-400 mt-3">
+                  Family & Photos
                 </h3>
                 <p className="text-sm font-semibold text-[#B7C5D6] mt-1">
-                  Priyanka (Daughter) & Arunav (Grandson)
+                  Voice message from Priyanka & photo updates.
                 </p>
               </div>
-            </button>
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  onOpenFamily();
+                }}
+                className="mt-4 w-full min-h-[48px] px-4 py-2.5 bg-[#ec4899] hover:bg-pink-400 text-white font-black text-sm rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-md transition-transform active:scale-95"
+              >
+                <Heart className="w-4 h-4 fill-current" />
+                <span>Open Family Connect</span>
+              </button>
+            </div>
 
-            {/* Tile 4: Soothing Music & River Sounds */}
-            <button
-              id="tile-peaceful-music"
-              onClick={() => {
-                sound.playClick();
-                onOpenMusic();
-              }}
-              className="bg-[#101F31] hover:bg-[#14283D] p-6 rounded-3xl border border-[#243A50] hover:border-[#5BA7FF] shadow-xl text-left flex flex-col justify-between min-h-[200px] transition-all transform active:scale-98 group cursor-pointer"
+            {/* Tile 4: Peaceful Sounds */}
+            <div
+              id="card-peaceful-sounds"
+              className="bg-[#101F31] p-6 rounded-3xl border border-[#243A50] hover:border-[#5BA7FF] shadow-xl text-left flex flex-col justify-between min-h-[240px] transition-all group"
             >
-              <div className="w-16 h-16 rounded-2xl bg-blue-950/80 text-blue-300 group-hover:bg-[#5BA7FF] group-hover:text-[#07111F] flex items-center justify-center text-4xl transition-colors shadow-xs border border-blue-800/60">
-                🌊
-              </div>
               <div>
-                <h3 className="text-2xl font-black text-[#F4F8FC] group-hover:text-[#5BA7FF]">
-                  Peaceful Soundscapes
+                <div className="flex items-center justify-between">
+                  <div className="w-16 h-16 rounded-2xl bg-blue-950/80 text-blue-300 group-hover:bg-[#5BA7FF] group-hover:text-[#07111F] flex items-center justify-center text-4xl transition-colors shadow-xs border border-blue-800/60">
+                    🌊
+                  </div>
+                  <span className="text-xs bg-blue-950 text-blue-300 font-black px-2.5 py-1 rounded-full border border-blue-800">
+                    Calm Waves
+                  </span>
+                </div>
+                <h3 className="text-2xl font-black text-[#F4F8FC] group-hover:text-[#5BA7FF] mt-3">
+                  Peaceful Sounds
                 </h3>
                 <p className="text-sm font-semibold text-[#B7C5D6] mt-1">
-                  Brahmaputra waves & soothing bamboo flutes
+                  Brahmaputra River Waves & Bamboo Flute.
                 </p>
               </div>
-            </button>
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  onOpenMusic();
+                }}
+                className="mt-4 w-full min-h-[48px] px-4 py-2.5 bg-[#5BA7FF] hover:bg-blue-300 text-[#07111F] font-black text-sm rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-md transition-transform active:scale-95"
+              >
+                <Headphones className="w-4 h-4" />
+                <span>Listen Now</span>
+              </button>
+            </div>
           </div>
 
           {/* Interactive Reminiscence Blossom Reveal (PixelSwap Component) */}

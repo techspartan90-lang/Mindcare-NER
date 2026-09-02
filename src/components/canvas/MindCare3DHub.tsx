@@ -146,7 +146,7 @@ export const PAVILION_ZONES: PavilionZone[] = [
     shortDesc: 'Dynamic difficulty adaptation and circadian sundowning anticipation.',
     fullDesc: 'Ethical on-device machine learning that adjusts exercise difficulty dynamically to eliminate user frustration, and detects early evening restlessness patterns.',
     keyMetric: 'Zero Frustration DDA',
-    targetSectionId: 'section-ai-intelligence',
+    targetSectionId: 'section-features',
     position: [-2.8, 0.8, -2.8],
     orbitRadius: 4.2,
     angle: 225,

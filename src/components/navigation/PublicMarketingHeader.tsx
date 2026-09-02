@@ -43,13 +43,13 @@ export const PublicMarketingHeader: React.FC<PublicMarketingHeaderProps> = ({
 
   const navItems = [
     { label: 'Home', sectionId: 'section-hero' },
-    { label: 'Features', sectionId: 'section-features' },
     { label: 'How It Works', sectionId: 'section-how-it-works' },
-    { label: 'For Patients', sectionId: 'section-patient' },
-    { label: 'For Caregivers', sectionId: 'section-caregiver' },
+    { label: 'Features', sectionId: 'section-features' },
+    { label: 'For Families', sectionId: 'section-caregiver' },
     { label: 'For Clinicians', sectionId: 'section-clinician' },
-    { label: '3D Ecosystem', sectionId: 'section-3d-hub' },
     { label: 'About', sectionId: 'section-problem' },
+    { label: 'FAQ', sectionId: 'section-faq' },
+    { label: 'Contact', sectionId: 'section-contact' },
   ];
 
   const handleNavClick = (sectionId: string) => {
