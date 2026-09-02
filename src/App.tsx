@@ -20,17 +20,8 @@ import { offlineSync } from './services/offlineSync';
 
 export type ExperienceMode = 'PUBLIC_MARKETING' | 'AUTHENTICATED_APP';
 
-const DashboardLayout = lazy(() =>
-  import('./components/dashboard/DashboardLayout').then((m) => ({
-    default: m.DashboardLayout,
-  })),
-);
-
-const MindCareCompletePlatform = lazy(() =>
-  import('./components/sections/MindCareCompletePlatform').then((m) => ({
-    default: m.MindCareCompletePlatform,
-  })),
-);
+import { DashboardLayout } from './components/dashboard/DashboardLayout';
+import { MindCareCompletePlatform } from './components/sections/MindCareCompletePlatform';
 
 function ExperienceFallback() {
   return (

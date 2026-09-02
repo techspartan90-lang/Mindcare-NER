@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, Component, ReactNode } from 'react';
 import {
   RotateCcw,
   Sparkles,
@@ -14,6 +14,28 @@ import { SPATIAL_ZONES } from './zonesData';
 import { SpatialZoneConfig, PerformanceMode } from './types';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { sound } from '../../services/sound';
+
+class CanvasErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any) {
+    console.warn('MindCare 3D canvas switched to 2D accessible fallback:', error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
 
 interface MindCare3DSceneProps {
   onNavigateSection: (sectionId: string) => void;
@@ -166,14 +188,25 @@ export const MindCare3DScene: React.FC<MindCare3DSceneProps> = ({
         {/* Canvas Render Area (8 Columns) */}
         <div className="lg:col-span-8 relative bg-[#07111F] rounded-2xl border border-[#243A50] overflow-hidden flex items-center justify-center min-h-[420px] sm:min-h-[500px]">
           {effectiveMode !== '2D_MODE' ? (
-            <AntigravityScene
-              selectedZone={selectedZone}
-              onSelectZone={handleSelectZone}
-              performanceMode={effectiveMode}
-              isAutoRotating={isAutoRotating}
-              resetTrigger={resetTrigger}
-              filteredZones={filteredZones}
-            />
+            <CanvasErrorBoundary
+              fallback={
+                <WebGLFallback
+                  selectedZone={selectedZone}
+                  onSelectZone={handleSelectZone}
+                  onNavigateSection={onNavigateSection}
+                  filteredZones={filteredZones}
+                />
+              }
+            >
+              <AntigravityScene
+                selectedZone={selectedZone}
+                onSelectZone={handleSelectZone}
+                performanceMode={effectiveMode}
+                isAutoRotating={isAutoRotating}
+                resetTrigger={resetTrigger}
+                filteredZones={filteredZones}
+              />
+            </CanvasErrorBoundary>
           ) : (
             <WebGLFallback
               selectedZone={selectedZone}
