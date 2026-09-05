@@ -34,6 +34,7 @@ interface MindCareVoiceAssistantWidgetProps {
   onOpenFamily?: () => void;
   onOpenSounds?: () => void;
   onOpenProgress?: () => void;
+  onOpenGeminiAssistant?: (mode?: 'CHAT' | 'LIVE') => void;
 }
 
 export const MindCareVoiceAssistantWidget: React.FC<MindCareVoiceAssistantWidgetProps> = ({
@@ -45,6 +46,7 @@ export const MindCareVoiceAssistantWidget: React.FC<MindCareVoiceAssistantWidget
   onOpenFamily,
   onOpenSounds,
   onOpenProgress,
+  onOpenGeminiAssistant,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [voiceState, setVoiceState] = useState<VoiceState>('IDLE');
@@ -556,6 +558,48 @@ export const MindCareVoiceAssistantWidget: React.FC<MindCareVoiceAssistantWidget
                   </p>
                 </div>
               </div>
+
+              {/* Gemini Multimodal Assistant Card */}
+              {onOpenGeminiAssistant && (
+                <div className="p-4 rounded-2xl bg-gradient-to-br from-[#0B2524] to-[#101F31] border border-[#19C3B1]/40 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-xl bg-[#19C3B1]/20 text-[#38D9C5] flex items-center justify-center">
+                        <Sparkles className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-black text-[#F4F8FC]">Gemini Multimodal AI Assistant</h4>
+                        <p className="text-[10px] text-[#7F91A6]">Search Grounding • Maps • Live Voice</p>
+                      </div>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full text-[9px] font-black bg-[#19C3B1] text-[#07111F]">
+                      NEW
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => {
+                        sound.playClick();
+                        setIsOpen(false);
+                        onOpenGeminiAssistant('CHAT');
+                      }}
+                      className="px-3 py-2 rounded-xl bg-[#14283D] hover:bg-[#19C3B1] hover:text-[#07111F] text-[#38D9C5] border border-[#243A50] text-xs font-black transition-all cursor-pointer text-center"
+                    >
+                      💬 Multimodal Chat
+                    </button>
+                    <button
+                      onClick={() => {
+                        sound.playClick();
+                        setIsOpen(false);
+                        onOpenGeminiAssistant('LIVE');
+                      }}
+                      className="px-3 py-2 rounded-xl bg-[#14283D] hover:bg-[#5BA7FF] hover:text-[#07111F] text-[#5BA7FF] border border-[#243A50] text-xs font-black transition-all cursor-pointer text-center"
+                    >
+                      🎙️ Live Voice API
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Senior-Friendly Quick Action Chips (Large Tactile Buttons) */}
               <div className="space-y-3">

@@ -20,6 +20,7 @@ interface DashboardLayoutProps {
   currentLang: SupportedLanguage;
   onLanguageChange: (lang: SupportedLanguage) => void;
   onOpenVoiceAssistant: () => void;
+  onOpenGeminiAssistant?: (mode?: 'CHAT' | 'LIVE') => void;
   onOpenAccessibility: () => void;
   onLogout: () => void;
   isOffline: boolean;
@@ -33,6 +34,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   currentLang,
   onLanguageChange,
   onOpenVoiceAssistant,
+  onOpenGeminiAssistant,
   onOpenAccessibility,
   onLogout,
   isOffline,
@@ -101,6 +103,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           currentLang={currentLang}
           onLanguageChange={onLanguageChange}
           onOpenVoiceAssistant={onOpenVoiceAssistant}
+          onOpenGeminiAssistant={onOpenGeminiAssistant}
           onOpenAccessibility={onOpenAccessibility}
           onLogout={onLogout}
           isOffline={isOffline}

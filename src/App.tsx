@@ -2,6 +2,7 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { PublicMarketingHeader } from './components/navigation/PublicMarketingHeader';
 import { AuthModal, AuthMode } from './components/auth/AuthModal';
 import { VoiceAssistantModal } from './components/patient/VoiceAssistantModal';
+import { MindCareGeminiAssistantModal } from './components/chat/MindCareGeminiAssistantModal';
 import { ArchitectureModal } from './components/admin/ArchitectureModal';
 import { AccessibilityDrawer } from './components/common/AccessibilityDrawer';
 import { PrivacyCenterModal } from './components/common/PrivacyCenterModal';
@@ -53,10 +54,17 @@ export default function App() {
 
   // Global Modals State
   const [isVoiceAssistantOpen, setIsVoiceAssistantOpen] = useState(false);
+  const [isGeminiAssistantOpen, setIsGeminiAssistantOpen] = useState(false);
+  const [geminiAssistantInitialMode, setGeminiAssistantInitialMode] = useState<'CHAT' | 'LIVE'>('CHAT');
   const [isArchitectureOpen, setIsArchitectureOpen] = useState(false);
   const [isAccessibilityDrawerOpen, setIsAccessibilityDrawerOpen] = useState(false);
   const [isPrivacyCenterOpen, setIsPrivacyCenterOpen] = useState(false);
   const [isDemonstrationModeOpen, setIsDemonstrationModeOpen] = useState(false);
+
+  const handleOpenGeminiAssistant = (mode: 'CHAT' | 'LIVE' = 'CHAT') => {
+    setGeminiAssistantInitialMode(mode);
+    setIsGeminiAssistantOpen(true);
+  };
 
   // Patient Profile state
   const [patient, setPatient] = useState<PatientProfile>({
@@ -245,6 +253,7 @@ export default function App() {
             onOpenSignUp={() => handleOpenAuth('SIGNUP')}
             onOpenAccessibility={() => setIsAccessibilityDrawerOpen(true)}
             onNavigateSection={handleNavigateMarketingSection}
+            onOpenGeminiAssistant={handleOpenGeminiAssistant}
           />
 
           {/* Public Marketing Landing Body (Hero, Trust Bar, 3D Ecosystem, Features, Flow, Security, Footer) */}
@@ -282,6 +291,7 @@ export default function App() {
             currentLang={currentLang}
             onLanguageChange={setCurrentLang}
             onOpenVoiceAssistant={() => setIsVoiceAssistantOpen(true)}
+            onOpenGeminiAssistant={handleOpenGeminiAssistant}
             onOpenAccessibility={() => setIsAccessibilityDrawerOpen(true)}
             onLogout={handleLogout}
             isOffline={isOffline}
@@ -313,6 +323,17 @@ export default function App() {
         onCallCaregiver={() => {
           voice.speak(`Connecting to caregiver ${patient.caregiverName}`, currentLang);
         }}
+      />
+
+      {/* Multimodal Gemini AI Assistant Modal (Chat, Maps/Search Grounding, Transcription & Live API) */}
+      <MindCareGeminiAssistantModal
+        isOpen={isGeminiAssistantOpen}
+        onClose={() => setIsGeminiAssistantOpen(false)}
+        patient={patient}
+        currentLang={currentLang}
+        initialMode={geminiAssistantInitialMode}
+        rolePerspective={currentRole === 'PATIENT' ? 'PATIENT' : currentRole === 'CAREGIVER' ? 'CAREGIVER' : 'CLINICIAN'}
+        onNavigateSection={handleNavigateMarketingSection}
       />
 
       {/* Technical Architecture Modal */}
@@ -347,6 +368,7 @@ export default function App() {
         currentLang={currentLang}
         onLanguageChange={setCurrentLang}
         onNavigateSection={handleNavigateMarketingSection}
+        onOpenGeminiAssistant={handleOpenGeminiAssistant}
         onOpenGames={() => {
           if (experience !== 'AUTHENTICATED_APP') {
             handleAuthenticate('PATIENT', patient.name);

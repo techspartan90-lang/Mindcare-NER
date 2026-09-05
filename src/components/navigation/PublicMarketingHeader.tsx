@@ -8,6 +8,8 @@ import {
   X,
   Volume2,
   VolumeX,
+  Sparkles,
+  Bot,
 } from 'lucide-react';
 import { SupportedLanguage } from '../../types';
 import { LANGUAGE_METADATA } from '../../services/i18n';
@@ -20,6 +22,7 @@ interface PublicMarketingHeaderProps {
   onOpenSignUp: () => void;
   onOpenAccessibility: () => void;
   onNavigateSection: (sectionId: string) => void;
+  onOpenGeminiAssistant?: (mode?: 'CHAT' | 'LIVE') => void;
 }
 
 export const PublicMarketingHeader: React.FC<PublicMarketingHeaderProps> = ({
@@ -29,6 +32,7 @@ export const PublicMarketingHeader: React.FC<PublicMarketingHeaderProps> = ({
   onOpenSignUp,
   onOpenAccessibility,
   onNavigateSection,
+  onOpenGeminiAssistant,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
@@ -94,6 +98,21 @@ export const PublicMarketingHeader: React.FC<PublicMarketingHeaderProps> = ({
 
         {/* RIGHT: Actions (Language, Accessibility, Login, Get Started) */}
         <div className="flex items-center gap-2">
+          {/* Gemini AI Assistant Button */}
+          {onOpenGeminiAssistant && (
+            <button
+              onClick={() => {
+                sound.playClick();
+                onOpenGeminiAssistant('CHAT');
+              }}
+              className="px-3 py-1.5 rounded-xl text-xs font-black text-[#38D9C5] bg-[#102B26] hover:bg-[#153832] border border-[#19C3B1]/40 hover:border-[#19C3B1] transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
+              title="Open MindCare Gemini Multimodal Assistant"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#38D9C5] animate-pulse" />
+              <span className="hidden sm:inline">Gemini AI</span>
+            </button>
+          )}
+
           {/* Sound Toggle */}
           <button
             onClick={toggleSound}
@@ -186,6 +205,19 @@ export const PublicMarketingHeader: React.FC<PublicMarketingHeaderProps> = ({
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-[#0B1726] border-b border-[#243A50] px-4 py-4 space-y-2">
+          {onOpenGeminiAssistant && (
+            <button
+              onClick={() => {
+                sound.playClick();
+                setMobileMenuOpen(false);
+                onOpenGeminiAssistant('CHAT');
+              }}
+              className="w-full px-4 py-2.5 rounded-xl text-left text-sm font-bold text-[#38D9C5] bg-[#102B26] border border-[#19C3B1]/40 flex items-center gap-2 cursor-pointer"
+            >
+              <Sparkles className="w-4 h-4 text-[#38D9C5] animate-pulse" />
+              <span>Gemini AI Assistant (Multimodal & Live)</span>
+            </button>
+          )}
           {navItems.map((item) => (
             <button
               key={item.label}

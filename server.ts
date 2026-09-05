@@ -1,15 +1,17 @@
+import http from 'http';
 import express, { Request, Response } from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import { createServer as createViteServer } from 'vite';
-import { GoogleGenAI } from '@google/genai';
+import { WebSocketServer, WebSocket } from 'ws';
+import { GoogleGenAI, Modality, LiveServerMessage } from '@google/genai';
 
 dotenv.config();
 
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
+app.use(express.json({ limit: '30mb' }));
 
 // Initialize Google GenAI on server side
 let aiClient: GoogleGenAI | null = null;
@@ -623,13 +625,234 @@ Keep tone warm, dignified, and encouraging. Return plain text only.`;
   });
 });
 
-// Gemini Conversational Assistant for Voice & Text
+// -------------------------------------------------------------
+// Gemini AI Endpoints: Chat, Grounding (Maps & Search), Transcription
+// -------------------------------------------------------------
+
+// Gemini Config & Status
+app.get('/api/gemini/config', (_req: Request, res: Response) => {
+  res.json({
+    success: true,
+    hasApiKey: !!process.env.GEMINI_API_KEY,
+    models: {
+      general: 'gemini-3.5-flash',
+      complex: 'gemini-3.1-pro-preview',
+      fast: 'gemini-3.1-flash-lite',
+      transcribe: 'gemini-3.5-transcribe',
+      live: 'gemini-3.1-flash-live-preview',
+    },
+    tools: ['googleMaps', 'googleSearch'],
+  });
+});
+
+// Audio Transcription with gemini-3.5-transcribe
+app.post('/api/gemini/transcribe', async (req: Request, res: Response) => {
+  const { audioData, mimeType = 'audio/webm', prompt } = req.body;
+  const ai = getAI();
+
+  if (!audioData) {
+    res.status(400).json({ success: false, error: 'No audio data provided' });
+    return;
+  }
+
+  if (!ai) {
+    // Helpful local fallback if API key is not yet set
+    res.json({
+      success: true,
+      data: {
+        text: 'Did I take my morning medicine today?',
+        isMockFallback: true,
+        model: 'gemini-3.5-transcribe',
+        note: 'Attach GEMINI_API_KEY in Settings > Secrets for live speech transcription.',
+      },
+    });
+    return;
+  }
+
+  try {
+    const audioPart = {
+      inlineData: {
+        mimeType: mimeType || 'audio/webm',
+        data: audioData,
+      },
+    };
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-3.5-transcribe',
+      contents: {
+        parts: [
+          audioPart,
+          {
+            text:
+              prompt ||
+              'Transcribe the spoken audio verbatim. Capture all words clearly. Accurately handle North East Indian regional terms, Assamese, Bengali, Manipuri, Khasi, Mizo, Bodo, Hindi, and English.',
+          },
+        ],
+      },
+    });
+
+    res.json({
+      success: true,
+      data: {
+        text: response.text || '',
+        model: 'gemini-3.5-transcribe',
+      },
+    });
+  } catch (err: any) {
+    console.error('Audio transcription error:', err);
+    res.status(500).json({
+      success: false,
+      error: err?.message || 'Failed to transcribe audio with gemini-3.5-transcribe',
+    });
+  }
+});
+
+// Gemini Multi-turn Chatbot with Role Instruction, Model Selection, and Grounding (Maps & Search)
+app.post('/api/gemini/chat', async (req: Request, res: Response) => {
+  const {
+    messages = [],
+    model = 'gemini-3.5-flash',
+    toolMode = 'none',
+    userLocation,
+    language = 'en',
+    patientContext = {},
+    rolePerspective = 'PATIENT',
+  } = req.body;
+
+  const ai = getAI();
+
+  // Model selection enforcement as requested:
+  // - gemini-3.1-pro-preview for particularly complex tasks
+  // - gemini-3.5-flash for general tasks (and maps/search grounding)
+  // - gemini-3.1-flash-lite for tasks that should happen fast
+  let selectedModel = model;
+  if (toolMode === 'maps' || toolMode === 'search') {
+    selectedModel = 'gemini-3.5-flash';
+  } else if (
+    !['gemini-3.1-pro-preview', 'gemini-3.5-flash', 'gemini-3.1-flash-lite'].includes(selectedModel)
+  ) {
+    selectedModel = 'gemini-3.5-flash';
+  }
+
+  const patientName = patientContext.name || 'Dhiren Borah';
+  const dementiaStage = patientContext.dementiaStage || 'Mild Cognitive Impairment';
+  const location = patientContext.location || 'Guwahati, Assam';
+
+  let roleInstruction = '';
+  if (rolePerspective === 'PATIENT') {
+    roleInstruction = `You are speaking directly to an elderly senior (${patientName}, 72, diagnosed with ${dementiaStage}, living in ${location}).
+Tone: Warm, calm, reassuring, highly respectful. Keep answers concise (2 to 3 sentences maximum).
+Address them respectfully as 'Dhiren-da' or 'Sir'. Avoid medical alarmism. If they ask about routine or medicine, reassure them gently.`;
+  } else if (rolePerspective === 'CAREGIVER') {
+    roleInstruction = `You are supporting a family caregiver (${patientContext.caregiverName || 'Priyanka Borah'}, daughter of ${patientName}).
+Tone: Empathetic, supportive, actionable. Provide structured dementia care strategies, behavioral de-escalation tips, respite resources, and caregiver burnout prevention advice.`;
+  } else {
+    roleInstruction = `You are consulting with a clinician, neurologist, or community health worker in North East India.
+Tone: Objective, clinical, evidence-informed. Discuss cognitive domain trajectories, MMSE/MoCA tracking, delirium vs dementia differentiators, and regional medical resource navigation.`;
+  }
+
+  const systemInstruction = `You are MindCare NER AI Assistant, an empathetic, specialized cognitive healthcare companion designed for North East India (Assam, Meghalaya, Manipur, Mizoram, Nagaland, Tripura, Arunachal Pradesh, Sikkim).
+${roleInstruction}
+Language capability: Answer in the language the user speaks or requests (English, Assamese, Bengali, Manipuri, Khasi, Mizo, Bodo, Hindi).
+Regional context: Familiar with Gauhati Medical College & Hospital (GMCH), NEIGRIHMS Shillong, RIMS Imphal, Assam Medical College Dibrugarh, local memory clinics, and community support in NER.`;
+
+  if (!ai) {
+    // Contextual local response if API key is not configured
+    let fallbackReply = `Hello ${patientName}! I am here to help you remember your daily routines, play gentle memory games, or call your caregiver. You took your morning medicine and drank 5 glasses of water today.`;
+    if (toolMode === 'maps') {
+      fallbackReply = `Here are reputable geriatric and dementia care facilities in North East India:\n1. **Gauhati Medical College & Hospital (GMCH)** — Department of Neurology & Geriatric Clinic, Bhangagarh, Guwahati, Assam.\n2. **NEIGRIHMS Shillong** — North Eastern Indira Gandhi Regional Institute of Health & Medical Sciences, Mawdiangdiang, Shillong, Meghalaya.\n3. **Assam Medical College & Hospital (AMCH)** — Barbari, Dibrugarh, Assam.\n4. **Regional Institute of Medical Sciences (RIMS)** — Lamphelpat, Imphal, Manipur.\n\n*(Connect your GEMINI_API_KEY in Settings > Secrets to enable live real-time Google Maps Grounding)*`;
+    } else if (toolMode === 'search') {
+      fallbackReply = `Verified Cognitive Care Note: Recent eldercare guidelines for North East India emphasize monsoon wellness precautions, regular hydration tracking, and culturally resonant memory games (such as Bihu and Eri silk pattern recognition). Connect your GEMINI_API_KEY in Settings > Secrets for live Google Search grounding.`;
+    }
+
+    res.json({
+      success: true,
+      data: {
+        reply: fallbackReply,
+        modelUsed: 'local-offline-engine',
+        toolUsed: toolMode,
+        groundingChunks: [],
+        searchQueries: [],
+      },
+    });
+    return;
+  }
+
+  try {
+    const config: any = {
+      systemInstruction,
+      temperature: selectedModel === 'gemini-3.1-pro-preview' ? 0.4 : 0.7,
+    };
+
+    // Maps Grounding using gemini-3.5-flash with googleMaps tool
+    if (toolMode === 'maps') {
+      config.tools = [{ googleMaps: {} }];
+      if (userLocation && typeof userLocation.latitude === 'number' && typeof userLocation.longitude === 'number') {
+        config.toolConfig = {
+          retrievalConfig: {
+            latLng: {
+              latitude: userLocation.latitude,
+              longitude: userLocation.longitude,
+            },
+          },
+        };
+      }
+    } else if (toolMode === 'search') {
+      // Search Grounding using gemini-3.5-flash with googleSearch tool
+      config.tools = [{ googleSearch: {} }];
+    }
+
+    // Format multi-turn conversation history
+    let formattedContents: any[];
+    if (Array.isArray(messages) && messages.length > 0) {
+      formattedContents = messages.map((m: any) => ({
+        role: m.role === 'assistant' || m.role === 'model' ? 'model' : 'user',
+        parts: [{ text: String(m.content || m.text || '') }],
+      }));
+    } else {
+      formattedContents = [
+        {
+          role: 'user',
+          parts: [{ text: 'Hello, please introduce yourself and how you can help me today.' }],
+        },
+      ];
+    }
+
+    const response = await ai.models.generateContent({
+      model: selectedModel,
+      contents: formattedContents,
+      config,
+    });
+
+    const groundingMetadata = response.candidates?.[0]?.groundingMetadata;
+    const groundingChunks = groundingMetadata?.groundingChunks || [];
+    const searchQueries = groundingMetadata?.webSearchQueries || [];
+
+    res.json({
+      success: true,
+      data: {
+        reply: response.text || 'I am here with you. How can I assist you today?',
+        modelUsed: selectedModel,
+        toolUsed: toolMode,
+        groundingChunks,
+        searchQueries,
+      },
+    });
+  } catch (err: any) {
+    console.error('Gemini chat error:', err);
+    res.status(500).json({
+      success: false,
+      error: err?.message || 'Gemini API call failed',
+    });
+  }
+});
+
+// Legacy Gemini Conversational Assistant route (forwarding to gemini-3.5-flash)
 app.post('/api/gemini/assistant', async (req: Request, res: Response) => {
   const { message, language = 'en', patientName = 'Dhiren Borah' } = req.body;
   const ai = getAI();
 
   if (!ai) {
-    // Fallback response if no API key is set
     res.json({
       success: true,
       data: {
@@ -641,18 +864,12 @@ app.post('/api/gemini/assistant', async (req: Request, res: Response) => {
   }
 
   try {
-    const systemInstruction = `You are MindCare NER, a gentle, respectful, and compassionate digital companion for elderly patients in the North Eastern Region of India (Assam, Meghalaya, Manipur, Mizoram, Tripura, Arunachal Pradesh, Nagaland, Sikkim).
+    const systemInstruction = `You are MindCare NER, a gentle, respectful, and compassionate digital companion for elderly patients in the North Eastern Region of India.
 Patient name: ${patientName}.
-Guidelines:
-1. Speak in warm, respectful, concise sentences (2 to 3 sentences maximum).
-2. For elderly users, avoid complex jargon. Use respectful terms like 'Dhiren-da' or 'Sir' where appropriate.
-3. If they ask about medicine, reassure them that their morning BP medicine is taken and evening medicine is at 5:30 PM.
-4. If they ask about games, encourage them to play the North East Cultural Memory Match.
-5. If they ask about family, reassure them that their daughter Priyanka is reachable anytime.
-6. Support their language preferences (English, Assamese, Bengali, Manipuri, Mizo, Khasi, Hindi). Respond in ${language} if prompted in that language.`;
+Speak in warm, respectful, concise sentences (2 to 3 sentences maximum). Respond in ${language} if prompted in that language.`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3.5-flash',
       contents: message || 'Hello, how can you help me today?',
       config: {
         systemInstruction,
@@ -664,7 +881,7 @@ Guidelines:
       success: true,
       data: {
         reply: response.text || 'I am right here with you. How can I help you today?',
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3.5-flash',
       },
     });
   } catch {
@@ -962,7 +1179,116 @@ app.get('/api/reports/:patientId', (req: Request, res: Response) => {
 });
 
 // -------------------------------------------------------------
-// Vite Middleware / Static Serving
+// Live API WebSocket Setup (gemini-3.1-flash-live-preview)
+// -------------------------------------------------------------
+
+function setupLiveWebSocket(server: http.Server) {
+  const wss = new WebSocketServer({ noServer: true });
+
+  server.on('upgrade', (request, socket, head) => {
+    const host = request.headers.host || 'localhost';
+    const url = new URL(request.url || '', `http://${host}`);
+    if (url.pathname === '/api/live' || url.pathname === '/live') {
+      wss.handleUpgrade(request, socket, head, (ws) => {
+        wss.emit('connection', ws, request);
+      });
+    }
+  });
+
+  wss.on('connection', async (clientWs: WebSocket) => {
+    const ai = getAI();
+    if (!ai) {
+      clientWs.send(
+        JSON.stringify({
+          type: 'error',
+          error: 'GEMINI_API_KEY is not configured in Settings > Secrets. Live API voice calls require an active API key.',
+        }),
+      );
+      clientWs.close();
+      return;
+    }
+
+    try {
+      const session = await ai.live.connect({
+        model: 'gemini-3.1-flash-live-preview',
+        config: {
+          responseModalities: [Modality.AUDIO],
+          speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: { voiceName: 'Zephyr' },
+            },
+          },
+          systemInstruction:
+            'You are MindCare Voice Assistant, an AI companion for elderly dementia patients and caregivers in North East India. Speak gently, warmly, slowly, and clearly in short, compassionate sentences. Support English, Assamese, Bengali, and Hindi.',
+        },
+        callbacks: {
+          onopen: () => {
+            clientWs.send(JSON.stringify({ type: 'ready' }));
+          },
+          onmessage: (message: LiveServerMessage) => {
+            const audio = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
+            if (audio) {
+              clientWs.send(JSON.stringify({ type: 'audio', audio }));
+            }
+            if (message.serverContent?.interrupted) {
+              clientWs.send(JSON.stringify({ type: 'interrupted', interrupted: true }));
+            }
+            const text = message.serverContent?.modelTurn?.parts?.[0]?.text;
+            if (text) {
+              clientWs.send(JSON.stringify({ type: 'text', text }));
+            }
+          },
+          onclose: () => {
+            clientWs.send(JSON.stringify({ type: 'closed' }));
+          },
+          onerror: (err: any) => {
+            console.error('Gemini Live API error:', err);
+            clientWs.send(
+              JSON.stringify({ type: 'error', error: err?.message || 'Live session error' }),
+            );
+          },
+        },
+      });
+
+      clientWs.on('message', (rawData: any) => {
+        try {
+          const msg = JSON.parse(rawData.toString());
+          if (msg.audio) {
+            session.sendRealtimeInput({
+              audio: { data: msg.audio, mimeType: 'audio/pcm;rate=16000' },
+            });
+          } else if (msg.text) {
+            session.sendRealtimeInput({
+              text: msg.text,
+            });
+          }
+        } catch (err) {
+          console.error('Error in Live WS message handler:', err);
+        }
+      });
+
+      clientWs.on('close', () => {
+        try {
+          session.close();
+        } catch {
+          // ignore session cleanup error
+        }
+      });
+    } catch (err: any) {
+      console.error('Failed to connect to Live API:', err);
+      clientWs.send(
+        JSON.stringify({
+          type: 'error',
+          error: err?.message || 'Could not connect to Gemini Live API',
+        }),
+      );
+      clientWs.close();
+    }
+  });
+}
+
+// -------------------------------------------------------------
+// Vite Middleware / Static Serving & Server Startup
 // -------------------------------------------------------------
 
 async function startServer() {
@@ -980,7 +1306,10 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
+  const server = http.createServer(app);
+  setupLiveWebSocket(server);
+
+  server.listen(PORT, '0.0.0.0', () => {
     console.log(`MindCare NER server running at http://0.0.0.0:${PORT}`);
   });
 }

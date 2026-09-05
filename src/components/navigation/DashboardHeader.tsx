@@ -24,6 +24,7 @@ interface DashboardHeaderProps {
   currentLang: SupportedLanguage;
   onLanguageChange: (lang: SupportedLanguage) => void;
   onOpenVoiceAssistant: () => void;
+  onOpenGeminiAssistant?: (mode?: 'CHAT' | 'LIVE') => void;
   onOpenAccessibility: () => void;
   onLogout: () => void;
   isOffline: boolean;
@@ -36,6 +37,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   currentLang,
   onLanguageChange,
   onOpenVoiceAssistant,
+  onOpenGeminiAssistant,
   onOpenAccessibility,
   onLogout,
   isOffline,
@@ -89,6 +91,21 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           {isOffline ? <WifiOff className="w-3.5 h-3.5" /> : <Wifi className="w-3.5 h-3.5" />}
           <span className="hidden xl:inline">{isOffline ? 'Edge Offline' : 'Live Sync'}</span>
         </div>
+
+        {/* Gemini AI Multimodal Assistant Trigger */}
+        {onOpenGeminiAssistant && (
+          <button
+            onClick={() => {
+              sound.playClick();
+              onOpenGeminiAssistant('CHAT');
+            }}
+            className="px-3 py-2 rounded-xl bg-[#102B26] hover:bg-[#153832] text-[#38D9C5] border border-[#19C3B1]/40 hover:border-[#19C3B1] transition-all cursor-pointer shadow-xs flex items-center gap-1.5"
+            title="Open MindCare Gemini Multimodal Assistant"
+          >
+            <Sparkles className="w-4 h-4 text-[#38D9C5] animate-pulse" />
+            <span className="hidden sm:inline text-xs font-black">Gemini AI</span>
+          </button>
+        )}
 
         {/* Voice Assistant Microphone Trigger */}
         <button
